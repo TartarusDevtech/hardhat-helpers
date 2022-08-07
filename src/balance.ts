@@ -1,7 +1,10 @@
 import { BigNumber, BigNumberish } from "ethers";
 import { ethers } from "hardhat";
 
-export async function increaseETHBalance(account: { address: string }, amount: BigNumberish) {
+export async function increaseETHBalance(
+  account: { address: string },
+  amount: BigNumberish = ethers.utils.parseEther("1000")
+) {
   const currentBalance = await ethers.provider.getBalance(account.address);
   const newBalance = currentBalance.add(amount);
   await setETHBalance(account, newBalance);

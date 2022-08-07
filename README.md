@@ -11,21 +11,21 @@ Replaces the first `beforeEach` in a test file to improve performance similar to
 Example:
 
 ```typescript
-import { snapshotEach } from 'hardhat-helpers'
+import { snapshotEach } from "hardhat-helpers";
 
-let someContract
+let someContract;
 
 snapshotEach(async () => {
-  someContract = await deployContract()
-})
+  someContract = await deployContract();
+});
 
-it('Test like normal', async () => {
-  expect(await someContract.method()).toEqual(42)
-})
+it("Test like normal", async () => {
+  expect(await someContract.method()).toEqual(42);
+});
 
-it('Next test reuses the original deployment', async () => {
-  expect(await someContract.otherMethod()).toEqual(69)
-})
+it("Next test reuses the original deployment", async () => {
+  expect(await someContract.otherMethod()).toEqual(69);
+});
 ```
 
 It runs like normal for the first test, and then each additional test rolls back the node instead of redeploying.
@@ -35,23 +35,23 @@ It runs like normal for the first test, and then each additional test rolls back
 Checks the tx for the exact logs specified including order, count, and args.
 
 ```typescript
-import { expectAllEvents } from 'hardhat-helpers'
+import { expectAllEvents } from "hardhat-helpers";
 
-it('Emits', async () => {
-  const tx = await magicContract.magic()
+it("Emits", async () => {
+  const tx = await magicContract.magic();
   await expectAllEvents(tx, [
     {
       contract: magicContract,
-      event: 'MagicStarted',
+      event: "MagicStarted",
       args: [42],
     },
     {
       contract: magicContract,
-      event: 'MagicHappened',
+      event: "MagicHappened",
       args: [69],
     },
-  ])
-})
+  ]);
+});
 ```
 
 ## Time Travel
@@ -59,13 +59,13 @@ it('Emits', async () => {
 Simple helpers to modify the block time in tests. Several variations are supported: see [time.ts](./src/time.ts) for a complete list.
 
 ```typescript
-import { increaseTime } from 'hardhat-helpers'
+import { increaseTime } from "hardhat-helpers";
 
-it('Do something later', async () => {
-  await timeContract.queue()
-  await increaseTime(10) // in seconds
-  await timeContract.process()
-})
+it("Do something later", async () => {
+  await timeContract.queue();
+  await increaseTime(10); // in seconds
+  await timeContract.process();
+});
 ```
 
 ## And more...
@@ -74,4 +74,5 @@ TODO: more docs
 
 - [balance](./src/balance.ts)
 - [fork](./src/fork.ts)
+  - Forked contracts: [dai](./src/mainnet/dai.ts)
 - [storage](./src/storage.ts)
