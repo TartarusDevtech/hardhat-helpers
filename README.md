@@ -73,4 +73,5 @@ it('Do something later', async () => {
 TODO: more docs
 
 - [balance](./src/balance.ts)
+- [fork](./src/fork.ts)
 - [storage](./src/storage.ts)
