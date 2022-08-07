@@ -1,20 +1,21 @@
-import { BigNumber, providers } from "ethers";
+import { BigNumber, BigNumberish, providers } from "ethers";
 import { ethers } from "hardhat";
 
 export const ONE_MINUTE = 60;
 export const ONE_HOUR = ONE_MINUTE * 60;
 export const ONE_DAY = ONE_HOUR * 24;
 
-export async function increaseTime(seconds: number): Promise<void> {
+export async function increaseTime(seconds: BigNumberish): Promise<void> {
+    const secondsNumber = BigNumber.from(seconds).toNumber();
     const provider: providers.JsonRpcProvider = ethers.provider;
-    await provider.send("evm_increaseTime", [seconds]);
+    await provider.send("evm_increaseTime", [secondsNumber]);
     await advanceBlock();
 }
 
-export async function increaseTimeTo(timestamp: number | BigNumber, shouldAdvanceBlock = true): Promise<void> {
-    timestamp = BigNumber.isBigNumber(timestamp) ? timestamp.toNumber() : timestamp;
+export async function increaseTimeTo(timestamp: BigNumberish, shouldAdvanceBlock = true): Promise<void> {
+    const timestampNumber = BigNumber.from(timestamp).toNumber();
     const provider: providers.JsonRpcProvider = ethers.provider;
-    await provider.send("evm_setNextBlockTimestamp", [timestamp]);
+    await provider.send("evm_setNextBlockTimestamp", [timestampNumber]);
     if (shouldAdvanceBlock) {
         await advanceBlock();
     }
