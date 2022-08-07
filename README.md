@@ -67,3 +67,10 @@ it('Do something later', async () => {
   await timeContract.process()
 })
 ```
+
+## And more...
+
+TODO: more docs
+
+- [balance](./src/balance.ts)
+- [storage](./src/storage.ts)
