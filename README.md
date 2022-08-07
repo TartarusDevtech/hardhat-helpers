@@ -53,3 +53,17 @@ it('Emits', async () => {
   ])
 })
 ```
+
+## Time Travel
+
+Simple helpers to modify the block time in tests. Several variations are supported: see [time.ts](./src/time.ts) for a complete list.
+
+```typescript
+import { increaseTime } from 'hardhat-helpers'
+
+it('Do something later', async () => {
+  await timeContract.queue()
+  await increaseTime(10) // in seconds
+  await timeContract.process()
+})
+```
