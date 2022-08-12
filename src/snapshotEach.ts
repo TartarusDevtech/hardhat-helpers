@@ -1,46 +1,80 @@
 import hre from "hardhat";
 import { Context } from "mocha";
 
-let deploySnapshotId: string;
-let deployer: (this: Context) => Promise<void> | undefined;
+type functionCallback = (this: Context) => Promise<void>;
 
-export function registerSnapshotDeploy(funcBeforeSnapshot: (this: Context) => Promise<void>): void {
-  deployer = funcBeforeSnapshot;
-}
+let snapshots: {
+  snapshotId: string;
+  snapshot: functionCallback;
+  parentSnapshot: functionCallback | undefined;
+  childSnapshot: functionCallback | undefined;
+}[] = [];
+let currentParentSnapshot: functionCallback | undefined;
 
-export function snapshotEach(funcBeforeSnapshot: (this: Context) => Promise<void>): void {
-  let snapshotId: string;
-
-  before(async function () {
-    if (!deploySnapshotId && deployer) {
-      // First run only
-      await deployer.call(this);
-      deploySnapshotId = await hre.network.provider.send("evm_snapshot", []);
-    }
-  });
-
+export function snapshotEach(funcBeforeSnapshot: functionCallback): void {
   beforeEach(async function () {
-    if (!snapshotId) {
+    let snapshot = snapshots.find((s) => s.snapshot === funcBeforeSnapshot);
+    if (!snapshot) {
       // First run only
       await funcBeforeSnapshot.call(this);
-      snapshotId = await hre.network.provider.send("evm_snapshot", []);
+      const snapshotId = await hre.network.provider.send("evm_snapshot", []);
+
+      // Store the snapshot
+      snapshot = {
+        snapshotId,
+        snapshot: funcBeforeSnapshot,
+        parentSnapshot: currentParentSnapshot,
+        childSnapshot: undefined,
+      };
+      snapshots.push(snapshot);
+
+      // Set the child
+      const parent = snapshots.find((s) => s.snapshot === currentParentSnapshot);
+      if (parent) {
+        parent.childSnapshot = funcBeforeSnapshot;
+      }
+
+      // Save for other snapshots
+      currentParentSnapshot = funcBeforeSnapshot;
     }
   });
 
   afterEach(async function () {
-    // Clean up state when tests finish
-    await hre.network.provider.send("evm_revert", [snapshotId]);
-    // A new snapshot is required after each revert
-    snapshotId = await hre.network.provider.send("evm_snapshot", []);
+    let snapshot = snapshots.find((s) => s.snapshot === funcBeforeSnapshot);
+    if (!snapshot) {
+      throw new Error("Snapshot not found (after each)");
+    }
+
+    // Only restore if there's no active child
+    if (!snapshot?.childSnapshot) {
+      // Clean up state when tests finish
+      await hre.network.provider.send("evm_revert", [snapshot.snapshotId]);
+      // A new snapshot is required after each revert
+      snapshot.snapshotId = await hre.network.provider.send("evm_snapshot", []);
+    }
   });
 
   after(async function () {
-    // Clean up state when tests finish
-    if (deploySnapshotId) {
-      await hre.network.provider.send("evm_revert", [deploySnapshotId]);
+    const snapshot = snapshots.find((s) => s.snapshot === funcBeforeSnapshot);
+    if (!snapshot) {
+      throw new Error("Snapshot not found (after)");
+    }
+    // Remove the current snapshot
+    snapshots.unshift(snapshot);
+    currentParentSnapshot = undefined;
 
+    // Clear the child state
+    const parentSnapshot = snapshots.find((s) => s.snapshot === snapshot.parentSnapshot);
+    if (parentSnapshot) {
+      parentSnapshot.childSnapshot = undefined;
+
+      // Clean up state when tests finish
+      await hre.network.provider.send("evm_revert", [parentSnapshot.snapshotId]);
       // A new snapshot is required after each revert
-      deploySnapshotId = await hre.network.provider.send("evm_snapshot", []);
+      parentSnapshot.snapshotId = await hre.network.provider.send("evm_snapshot", []);
+
+      // Promote the parent
+      currentParentSnapshot = parentSnapshot.snapshot;
     }
   });
 }
