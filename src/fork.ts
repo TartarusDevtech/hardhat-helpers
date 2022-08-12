@@ -1,7 +1,7 @@
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { ethers, network } from "hardhat";
 
-export async function forkFromBlock(jsonRpcUrl: string, blockNumber: number | "latest" = "latest") {
+export async function forkFromBlock(jsonRpcUrl: string, blockNumber?: number) {
   await network.provider.request({
     method: "hardhat_reset",
     params: [
