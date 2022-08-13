@@ -59,6 +59,36 @@ describe("snapshotEach", () => {
         });
       });
 
+      describe("No-op nest", () => {
+        snapshotEach(async () => {
+          // No-op
+        });
+
+        it(`Value is ${value}`, async () => {
+          expect(await mock.value()).to.equal(value);
+        });
+
+        it(`Value is ${value}`, async () => {
+          expect(await mock.value()).to.equal(value);
+        });
+      });
+
+      describe("BeforeEach snap", () => {
+        const value = 99;
+
+        beforeEach(async () => {
+          await mock.set(value);
+        });
+
+        it(`Value is ${value}`, async () => {
+          expect(await mock.value()).to.equal(value);
+        });
+
+        it(`Value is ${value}`, async () => {
+          expect(await mock.value()).to.equal(value);
+        });
+      });
+
       it(`Value is ${value}`, async () => {
         expect(await mock.value()).to.equal(value);
       });
