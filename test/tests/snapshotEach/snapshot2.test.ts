@@ -1,8 +1,8 @@
 import { expect } from "chai";
 import { snapshotEach } from "../../../src";
-import { mock } from "./shared";
+import { mock } from "../../helpers";
 
-describe("snapshotEach", () => {
+describe("snapshotEach / snapshot2", () => {
   it("Deployed & has a default value", async () => {
     expect(await mock.value()).to.equal(0);
   });
