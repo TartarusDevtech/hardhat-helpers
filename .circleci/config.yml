@@ -1,0 +1,30 @@
+version: 2.1
+
+orbs:
+  node: circleci/node@5.0.2
+
+jobs:
+  build-and-test:
+    docker:
+      - image: cimg/node:lts
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn
+
+      - run: yarn build
+      - run: yarn lint
+
+      # Auto-commit any changes
+      - run: mkdir -p ~/.ssh
+      - run: ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+      - run: bash .circleci/commit.sh
+
+      # Testing does not change the repo, can run after auto-commit
+      - run: yarn test
+
+workflows:
+  build-and-test:
+    jobs:
+      - build-and-test
