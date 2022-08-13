@@ -12,7 +12,7 @@ describe("storage / setStorage", () => {
   });
 
   it("Has 0 by default", async () => {
-    expect(await mockValue.value()).to.eq(0);
+    expect(await mockValue.number()).to.eq(0);
   });
 
   describe("Can set the storage with hex values", () => {
@@ -21,7 +21,12 @@ describe("storage / setStorage", () => {
     });
 
     it("Has 18", async () => {
-      expect(await mockValue.value()).to.eq(18);
+      expect(await mockValue.number()).to.eq(18);
+    });
+
+    it("Still has 18", async () => {
+      // Confirming snapshotEach is working with setStorage
+      expect(await mockValue.number()).to.eq(18);
     });
   });
 
@@ -31,7 +36,7 @@ describe("storage / setStorage", () => {
     });
 
     it("Has 42", async () => {
-      expect(await mockValue.value()).to.eq(42);
+      expect(await mockValue.number()).to.eq(42);
     });
   });
 });
