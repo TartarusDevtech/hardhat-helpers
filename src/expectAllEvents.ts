@@ -1,10 +1,11 @@
 import { expect } from "chai";
 import { Contract, ContractTransaction } from "ethers";
 import "@nomicfoundation/hardhat-chai-matchers";
+import { EventFragment } from "ethers/lib/utils";
 
 export type EventLog = {
   contract: Contract;
-  event: string;
+  event: EventFragment;
   args: any[];
 };
 
@@ -31,7 +32,7 @@ export async function expectAllEvents(
       `Log address mismatch at index ${i}; expected ${expectedLog.contract.address}, got ${emittedLog.address}`
     );
     // Throws if the event is not found
-    const fragment = expectedLog.contract.interface.getEvent(expectedLog.event);
+    const fragment = expectedLog.contract.interface.getEvent(expectedLog.event.name);
     const topic0 = expectedLog.contract.interface.getEventTopic(fragment);
     // Confirms order by event name
     expect(emittedLog.topics[0]).to.eq(
@@ -42,7 +43,7 @@ export async function expectAllEvents(
     // For simplicity, check for args with the chai matcher
     // -- this means we do not validate the order args emit when the same event name is emitted multiple times
     await expect(tx)
-      .to.emit(expectedLog.contract, expectedLog.event)
+      .to.emit(expectedLog.contract, expectedLog.event.name)
       .withArgs(...expectedLog.args);
   }
 }

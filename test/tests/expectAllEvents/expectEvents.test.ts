@@ -41,7 +41,7 @@ describe("expectAllEvents / expectEvents", () => {
 
     it("Fails with other events", async () => {
       await expect(
-        expectAllEvents(tx, [{ contract: mockEvent, event: mockEvent.interface.events["Event()"].name, args: [] }])
+        expectAllEvents(tx, [{ contract: mockEvent, event: mockEvent.interface.events["Event()"], args: [] }])
       ).to.be.rejectedWith("Log count mismatch");
     });
   });
@@ -55,7 +55,7 @@ describe("expectAllEvents / expectEvents", () => {
       await expectAllEvents(tx, [
         {
           contract: mockEvent,
-          event: mockEvent.interface.events["Event()"].name,
+          event: mockEvent.interface.events["Event()"],
           args: [],
         },
       ]);
@@ -63,13 +63,13 @@ describe("expectAllEvents / expectEvents", () => {
 
     it("Fails with wrong address", async () => {
       await expect(
-        expectAllEvents(tx, [{ contract: mockEvents, event: mockEvents.interface.events["Event()"].name, args: [] }])
+        expectAllEvents(tx, [{ contract: mockEvents, event: mockEvents.interface.events["Event()"], args: [] }])
       ).to.be.rejectedWith("Log address mismatch");
     });
 
     it("Fails with extra arg", async () => {
       await expect(
-        expectAllEvents(tx, [{ contract: mockEvent, event: mockEvent.interface.events["Event()"].name, args: [1] }])
+        expectAllEvents(tx, [{ contract: mockEvent, event: mockEvent.interface.events["Event()"], args: [1] }])
       ).to.be.rejectedWith(`Expected "Event" event to have 1 argument(s), but it has 0`);
     });
   });
@@ -92,7 +92,7 @@ describe("expectAllEvents / expectEvents", () => {
       await expectAllEvents(tx, [
         {
           contract: mockEvents,
-          event: mockEvents.interface.events["Multiple(address,address,address,uint256,string,bytes)"].name,
+          event: mockEvents.interface.events["Multiple(address,address,address,uint256,string,bytes)"],
           args,
         },
       ]);
@@ -104,7 +104,7 @@ describe("expectAllEvents / expectEvents", () => {
         expectAllEvents(tx, [
           {
             contract: mockEvents,
-            event: mockEvents.interface.events["Multiple(address,address,address,uint256,string,bytes)"].name,
+            event: mockEvents.interface.events["Multiple(address,address,address,uint256,string,bytes)"],
             args,
           },
         ])
@@ -117,7 +117,7 @@ describe("expectAllEvents / expectEvents", () => {
         expectAllEvents(tx, [
           {
             contract: mockEvents,
-            event: mockEvents.interface.events["Multiple(address,address,address,uint256,string,bytes)"].name,
+            event: mockEvents.interface.events["Multiple(address,address,address,uint256,string,bytes)"],
             args,
           },
         ])
@@ -162,27 +162,27 @@ describe("expectAllEvents / expectEvents", () => {
       await expectAllEvents(tx, [
         {
           contract: mockEvents,
-          event: mockEvents.interface.events["Empty()"].name,
+          event: mockEvents.interface.events["Empty()"],
           args: [],
         },
         {
           contract: mockEvents,
-          event: mockEvents.interface.events["String(string)"].name,
+          event: mockEvents.interface.events["String(string)"],
           args: [str],
         },
         {
           contract: mockEvents,
-          event: mockEvents.interface.events["Uint(uint256)"].name,
+          event: mockEvents.interface.events["Uint(uint256)"],
           args: [1],
         },
         {
           contract: mockEvents,
-          event: mockEvents.interface.events["Multiple(address,address,address,uint256,string,bytes)"].name,
+          event: mockEvents.interface.events["Multiple(address,address,address,uint256,string,bytes)"],
           args,
         },
         {
           contract: mockEvents,
-          event: mockEvents.interface.events["Uint(uint256)"].name,
+          event: mockEvents.interface.events["Uint(uint256)"],
           args: [2],
         },
       ]);
@@ -234,37 +234,37 @@ describe("expectAllEvents / expectEvents", () => {
       await expectAllEvents(tx, [
         {
           contract: mockEvents,
-          event: mockEvents.interface.events["Empty()"].name,
+          event: mockEvents.interface.events["Empty()"],
           args: [],
         },
         {
           contract: mockEvent,
-          event: mockEvent.interface.events["Event()"].name,
+          event: mockEvent.interface.events["Event()"],
           args: [],
         },
         {
           contract: mockEvents,
-          event: mockEvents.interface.events["String(string)"].name,
+          event: mockEvents.interface.events["String(string)"],
           args: [str],
         },
         {
           contract: mockEvents,
-          event: mockEvents.interface.events["Uint(uint256)"].name,
+          event: mockEvents.interface.events["Uint(uint256)"],
           args: [1],
         },
         {
           contract: mockEvents,
-          event: mockEvents.interface.events["Multiple(address,address,address,uint256,string,bytes)"].name,
+          event: mockEvents.interface.events["Multiple(address,address,address,uint256,string,bytes)"],
           args,
         },
         {
           contract: mockEvents,
-          event: mockEvents.interface.events["Uint(uint256)"].name,
+          event: mockEvents.interface.events["Uint(uint256)"],
           args: [2],
         },
         {
           contract: mockEvent,
-          event: mockEvent.interface.events["Event()"].name,
+          event: mockEvent.interface.events["Event()"],
           args: [],
         },
       ]);
