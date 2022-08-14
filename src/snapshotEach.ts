@@ -16,8 +16,14 @@ export function snapshotEach(funcBeforeSnapshot: functionCallback): void {
   beforeEach(async function () {
     let snapshot = snapshots.find((s) => s.callback === funcBeforeSnapshot);
     if (!snapshot) {
+      let error;
+
       // First run only
-      await funcBeforeSnapshot.call(this);
+      try {
+        await funcBeforeSnapshot.call(this);
+      } catch (_error) {
+        error = _error;
+      }
 
       const snapshotId = await hre.network.provider.send("evm_snapshot", []);
 
@@ -37,6 +43,11 @@ export function snapshotEach(funcBeforeSnapshot: functionCallback): void {
 
       // Save for other snapshots
       currentParentSnapshot = snapshot;
+
+      if (error) {
+        // Rethrow error after snapshot so that after still works as expected
+        throw error;
+      }
     }
     // Only restore if there's no active child
     else if (!snapshot?.childSnapshot) {
