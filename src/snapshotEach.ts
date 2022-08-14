@@ -55,6 +55,8 @@ export function snapshotEach(funcBeforeSnapshot: functionCallback): void {
     }
     // Remove the current snapshot
     snapshots.unshift(snapshot);
+    // Revert before exiting the test block
+    await hre.network.provider.send("evm_revert", [snapshot.snapshotId]);
 
     // Clear the child state
     if (snapshot.parentSnapshot) {
