@@ -2,26 +2,26 @@ import hre, { ethers } from "hardhat";
 import { Context } from "mocha";
 
 type functionCallback = (this: Context) => Promise<void>;
-
-let snapshots: {
+type Snapshot = {
   snapshotId: string;
-  snapshot: functionCallback;
-  parentSnapshot: functionCallback | undefined;
-  childSnapshot: functionCallback | undefined;
-}[] = [];
-let currentParentSnapshot: functionCallback | undefined;
+  callback: functionCallback;
+  parentSnapshot: Snapshot | undefined;
+  childSnapshot: Snapshot | undefined;
+  block: number;
+};
+
+let snapshots: Snapshot[] = [];
+let currentParentSnapshot: Snapshot | undefined;
 
 export function snapshotEach(funcBeforeSnapshot: functionCallback): void {
   beforeEach(async function () {
-    let snapshot = snapshots.find((s) => s.snapshot === funcBeforeSnapshot);
+    let snapshot = snapshots.find((s) => s.callback === funcBeforeSnapshot);
     if (!snapshot) {
-      const beforeBlock = await ethers.provider.getBlockNumber();
-
       // First run only
       await funcBeforeSnapshot.call(this);
 
-      const afterBlock = await ethers.provider.getBlockNumber();
-      if (beforeBlock === afterBlock) {
+      const block = await ethers.provider.getBlockNumber();
+      if (currentParentSnapshot?.block === block) {
         // No changes, skip snapshot
         return;
       }
@@ -31,20 +31,20 @@ export function snapshotEach(funcBeforeSnapshot: functionCallback): void {
       // Store the snapshot
       snapshot = {
         snapshotId,
-        snapshot: funcBeforeSnapshot,
+        callback: funcBeforeSnapshot,
         parentSnapshot: currentParentSnapshot,
         childSnapshot: undefined,
+        block,
       };
       snapshots.push(snapshot);
 
       // Set the child
-      const parent = snapshots.find((s) => s.snapshot === currentParentSnapshot);
-      if (parent) {
-        parent.childSnapshot = funcBeforeSnapshot;
+      if (currentParentSnapshot) {
+        currentParentSnapshot.childSnapshot = snapshot;
       }
 
       // Save for other snapshots
-      currentParentSnapshot = funcBeforeSnapshot;
+      currentParentSnapshot = snapshot;
     }
     // Only restore if there's no active child
     else if (!snapshot?.childSnapshot) {
@@ -56,7 +56,7 @@ export function snapshotEach(funcBeforeSnapshot: functionCallback): void {
   });
 
   after(async function () {
-    const snapshot = snapshots.find((s) => s.snapshot === funcBeforeSnapshot);
+    const snapshot = snapshots.find((s) => s.callback === funcBeforeSnapshot);
     if (!snapshot) {
       // Skip if no snapshot found
       return;
@@ -65,12 +65,11 @@ export function snapshotEach(funcBeforeSnapshot: functionCallback): void {
     snapshots.unshift(snapshot);
 
     // Clear the child state
-    const parentSnapshot = snapshots.find((s) => s.snapshot === snapshot.parentSnapshot);
-    if (parentSnapshot) {
-      parentSnapshot.childSnapshot = undefined;
+    if (snapshot.parentSnapshot) {
+      snapshot.parentSnapshot.childSnapshot = undefined;
 
       // Promote the parent
-      currentParentSnapshot = parentSnapshot.snapshot;
+      currentParentSnapshot = snapshot.parentSnapshot;
     } else {
       // Clear the parent
       currentParentSnapshot = undefined;
