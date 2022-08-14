@@ -1,4 +1,4 @@
-import hre, { ethers } from "hardhat";
+import hre from "hardhat";
 import { Context } from "mocha";
 
 type functionCallback = (this: Context) => Promise<void>;
@@ -7,7 +7,6 @@ type Snapshot = {
   callback: functionCallback;
   parentSnapshot: Snapshot | undefined;
   childSnapshot: Snapshot | undefined;
-  block: number;
 };
 
 let snapshots: Snapshot[] = [];
@@ -20,12 +19,6 @@ export function snapshotEach(funcBeforeSnapshot: functionCallback): void {
       // First run only
       await funcBeforeSnapshot.call(this);
 
-      const block = await ethers.provider.getBlockNumber();
-      if (currentParentSnapshot?.block === block) {
-        // No changes, skip snapshot
-        return;
-      }
-
       const snapshotId = await hre.network.provider.send("evm_snapshot", []);
 
       // Store the snapshot
@@ -34,7 +27,6 @@ export function snapshotEach(funcBeforeSnapshot: functionCallback): void {
         callback: funcBeforeSnapshot,
         parentSnapshot: currentParentSnapshot,
         childSnapshot: undefined,
-        block,
       };
       snapshots.push(snapshot);
 
