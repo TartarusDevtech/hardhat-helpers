@@ -1,13 +1,29 @@
 import { expect } from "chai";
-import { Contract, ContractTransaction } from "ethers";
+import { Contract, ContractTransaction, Event } from "ethers";
 import "@nomicfoundation/hardhat-chai-matchers";
 import { EventFragment } from "ethers/lib/utils";
+import { TypedEvent } from "./typechain/common";
 
 export type EventLog = {
   contract: Contract;
   event: EventFragment;
   args: any[];
 };
+
+export async function getEvent<T extends TypedEvent>(
+  tx: ContractTransaction,
+  contract: Contract,
+  eventFragment: EventFragment
+): Promise<T> {
+  const receipt = await tx.wait();
+  const event: Event | undefined = receipt.events?.find(
+    (e) => e.topics.length > 0 && e.topics[0] === contract.interface.getEventTopic(eventFragment)
+  );
+  if (!event) {
+    throw new Error(`Event ${eventFragment.name} not found`);
+  }
+  return event as unknown as T;
+}
 
 /**
  * Checks the tx for the exact logs specified including order, count, and args.
