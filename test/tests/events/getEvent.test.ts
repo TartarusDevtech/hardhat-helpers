@@ -37,8 +37,14 @@ describe("expectAllEvents / expectEvents", () => {
       tx = await mockEvent.emitEvent();
     });
 
-    it("getEvent", async () => {
+    it("getEvent from contract", async () => {
       const event = await getEvent<EventEvent>(tx, mockEvent, mockEvent.interface.events["Event()"]);
+      console.log(event);
+    });
+
+    it("getEvent from factory", async () => {
+      const factory = new MockEvent__factory();
+      const event = await getEvent<EventEvent>(tx, factory, factory.interface.events["Event()"]);
       console.log(event);
     });
   });

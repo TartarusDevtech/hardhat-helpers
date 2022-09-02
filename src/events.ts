@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { Contract, ContractTransaction, Event } from "ethers";
 import "@nomicfoundation/hardhat-chai-matchers";
-import { EventFragment } from "ethers/lib/utils";
+import { EventFragment, Interface } from "ethers/lib/utils";
 import { TypedEvent } from "./typechain/common";
 
 export type EventLog = {
@@ -12,7 +12,7 @@ export type EventLog = {
 
 export async function getEvent<T extends TypedEvent>(
   tx: ContractTransaction,
-  contract: Contract,
+  contract: { interface: Interface },
   eventFragment: EventFragment
 ): Promise<T> {
   const receipt = await tx.wait();
