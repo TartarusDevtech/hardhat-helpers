@@ -23,6 +23,7 @@ jobs:
 
       # Testing does not change the repo, can run after auto-commit
       - run: yarn test
+      - run: yarn testScript
 
 workflows:
   build-and-test:

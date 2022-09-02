@@ -1,6 +1,6 @@
 {
   "name": "hardhat-helpers",
-  "version": "0.1.16",
+  "version": "0.1.17",
   "description": "Test helpers for Hardhat.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -11,8 +11,9 @@
   "scripts": {
     "build": "yarn typechain && tsc",
     "lint": "prettier \"**/*.{json,md,sol,yml,ts}\" --write",
-    "publishNPM": "rm -rf ./dist && yarn && yarn lint && yarn build && npm publish",
+    "prepPublish": "rm -rf ./dist && yarn && yarn lint && yarn build && yarn test && yarn testScript",
     "test": "hardhat test",
+    "testScript": "hardhat run test/scripts/exampleScript.ts",
     "typechain": "typechain --target ethers-v5 --out-dir ./src/typechain ./abis/**/*.json"
   },
   "repository": {

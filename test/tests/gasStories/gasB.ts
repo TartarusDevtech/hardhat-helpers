@@ -1,7 +1,8 @@
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { ContractTransaction } from "ethers";
 import { ethers } from "hardhat";
-import { snapshotEach, gasStory } from "../../../src";
+import { snapshotEach } from "../../../src";
+import { gasStory } from "../../../src/gasStories";
 import {
   MockEvent,
   MockEvents,
