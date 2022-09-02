@@ -1,4 +1,5 @@
 import { expect } from "chai";
+
 import { snapshotEach } from "../../../src";
 import { mock } from "../../helpers";
 

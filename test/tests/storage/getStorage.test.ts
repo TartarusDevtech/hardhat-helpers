@@ -1,6 +1,7 @@
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { expect } from "chai";
 import { ethers } from "hardhat";
+
 import { getStorageAddress, getStorageNumber, snapshotEach } from "../../../src";
 import { MockValue, MockValue__factory } from "../../typechain";
 
@@ -36,7 +37,7 @@ describe("storage / getStorage", () => {
   });
 
   describe("After setting address with leading zeros", () => {
-    let address = "0x000000000000000000000000000000000000dEaD";
+    const address = "0x000000000000000000000000000000000000dEaD";
 
     snapshotEach(async () => {
       await mockValue.setAddr(address);
@@ -49,7 +50,7 @@ describe("storage / getStorage", () => {
   });
 
   describe("After setting address with trailing zeros", () => {
-    let address = "0xdEad000000000000000000000000000000000000";
+    const address = "0xdEad000000000000000000000000000000000000";
 
     snapshotEach(async () => {
       await mockValue.setAddr(address);

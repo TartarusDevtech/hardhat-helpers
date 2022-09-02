@@ -1,39 +1,25 @@
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { ContractTransaction } from "ethers";
 import { ethers } from "hardhat";
+
 import { snapshotEach } from "../../../src";
 import { gasStory } from "../../../src/gasStories";
-import {
-  MockEvent,
-  MockEvents,
-  MockEvents__factory,
-  MockEvent__factory,
-  Multicall,
-  Multicall__factory,
-} from "../../typechain";
+import { MockEvent, MockEvent__factory } from "../../typechain";
 
 describe("gasStories / gasA", () => {
   let mockEvent: MockEvent;
-  let mockEvents: MockEvents;
-  let multicall: Multicall;
-
   let alice: SignerWithAddress;
-  let bob: SignerWithAddress;
-  let charlie: SignerWithAddress;
-
   let tx: ContractTransaction;
 
   snapshotEach(async () => {
-    [alice, bob, charlie] = await ethers.getSigners();
+    [alice] = await ethers.getSigners();
     mockEvent = await new MockEvent__factory(alice).deploy();
-    mockEvents = await new MockEvents__factory(alice).deploy();
-    multicall = await new Multicall__factory(alice).deploy();
   });
 
   it("Record", async () => {
     tx = await mockEvent.emitEvent();
     await gasStory(tx, "MockEvent", "emitEvent");
-    let events: ContractTransaction[] = [];
+    const events: ContractTransaction[] = [];
     for (let i = 0; i < 20; i++) {
       events.push(tx);
     }

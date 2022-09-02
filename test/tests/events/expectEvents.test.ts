@@ -1,13 +1,14 @@
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { expect } from "chai";
-import { BigNumber, BigNumberish, ContractTransaction } from "ethers";
+import { BigNumberish, ContractTransaction } from "ethers";
 import { ethers } from "hardhat";
-import { EventLog, expectAllEvents, snapshotEach } from "../../../src";
+
+import { expectAllEvents, snapshotEach } from "../../../src";
 import {
   MockEvent,
+  MockEvent__factory,
   MockEvents,
   MockEvents__factory,
-  MockEvent__factory,
   Multicall,
   Multicall__factory,
 } from "../../typechain";

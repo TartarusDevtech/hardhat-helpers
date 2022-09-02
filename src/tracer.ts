@@ -1,4 +1,5 @@
 import "hardhat-tracer";
+
 import { tracer } from "hardhat";
 
 export async function registerTracerNames<T extends { [key: string]: { address: string } }>(

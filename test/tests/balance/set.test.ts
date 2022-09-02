@@ -2,6 +2,7 @@ import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { expect } from "chai";
 import { BigNumberish } from "ethers";
 import { ethers } from "hardhat";
+
 import { setETHBalance, snapshotEach } from "../../../src";
 
 describe("balance / set", () => {

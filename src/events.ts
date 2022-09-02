@@ -1,7 +1,9 @@
+import "@nomicfoundation/hardhat-chai-matchers";
+
 import { expect } from "chai";
 import { Contract, ContractTransaction, Event } from "ethers";
-import "@nomicfoundation/hardhat-chai-matchers";
 import { EventFragment, Interface } from "ethers/lib/utils";
+
 import { TypedEvent } from "./typechain/common";
 
 export type EventLog = {

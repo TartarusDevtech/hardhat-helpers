@@ -1,8 +1,8 @@
-import { BigNumber, Contract, ContractTransaction, providers } from "ethers";
+import { BigNumber, ContractTransaction, providers } from "ethers";
 import { ethers } from "hardhat";
 const provider: providers.JsonRpcProvider = ethers.provider;
 import chalk from "chalk";
-import { writeFileSync, mkdirSync } from "fs";
+import { mkdirSync, writeFileSync } from "fs";
 import path from "path";
 /*
  CircleCI supported chalk styles
@@ -26,7 +26,7 @@ type GasRecord = {
   [description: string]: GasRecord | BigNumber;
 };
 
-let records: GasRecord = {};
+const records: GasRecord = {};
 let resultsLog = "";
 
 export async function gasStory(
@@ -128,26 +128,26 @@ function calcGasCost(gasUsed: BigNumber) {
   );
 }
 
-function getPrintedCost(gasUsed: BigNumber, chalkAndPad = true, includeDollarEst = true): string {
+function getPrintedCost(gasUsed: BigNumber, shouldChalk = true, includeDollarEst = true): string {
   let costString = "";
   if (includeDollarEst) {
     const cost = calcGasCost(gasUsed);
     costString = `$${cost.toLocaleString(undefined, {
       maximumFractionDigits: 2,
       minimumFractionDigits: 2,
-    })} `.padStart(chalkAndPad ? 8 : 0);
-    if (chalkAndPad) {
+    })} `.padStart(8);
+    if (shouldChalk) {
       costString = `${chalk.greenBright(costString)}`;
     }
   }
   let gasString = gasUsed.toNumber().toLocaleString();
-  if (chalkAndPad) {
+  if (shouldChalk) {
     gasString = `${chalk.yellow(gasString)}`;
   }
   if (includeDollarEst) {
     gasString = `(${gasString})`;
   }
-  gasString = gasString.padStart(chalkAndPad ? 19 : 0);
+  gasString = gasString.padStart(includeDollarEst ? 19 : 7);
   return `${costString}${gasString}`;
 }
 

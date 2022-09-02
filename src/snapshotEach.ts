@@ -9,7 +9,7 @@ type Snapshot = {
   childSnapshot: Snapshot | undefined;
 };
 
-let snapshots: Snapshot[] = [];
+const snapshots: Snapshot[] = [];
 let currentParentSnapshot: Snapshot | undefined;
 
 export function snapshotEach(funcBeforeSnapshot: functionCallback): void {

@@ -1,0 +1,18 @@
+extends:
+  - plugin:@typescript-eslint/eslint-recommended
+parser: "@typescript-eslint/parser"
+parserOptions:
+  project: tsconfig-test.json
+plugins:
+  - "@typescript-eslint"
+  - "no-only-tests"
+  - "simple-import-sort"
+root: true
+rules:
+  "@typescript-eslint/no-floating-promises":
+    - error
+  "@typescript-eslint/no-unused-vars":
+    - error
+  "no-only-tests/no-only-tests": "error"
+  "simple-import-sort/imports": "error"
+  "simple-import-sort/exports": "error"

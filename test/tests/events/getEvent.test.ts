@@ -1,23 +1,16 @@
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { expect } from "chai";
-import { BigNumber, BigNumberish, ContractTransaction } from "ethers";
+import { BigNumberish, ContractTransaction } from "ethers";
 import { ethers } from "hardhat";
-import { EventLog, expectAllEvents, snapshotEach, getEvent } from "../../../src";
-import {
-  MockEvent,
-  MockEvents,
-  MockEvents__factory,
-  MockEvent__factory,
-  Multicall,
-  Multicall__factory,
-} from "../../typechain";
+
+import { getEvent, snapshotEach } from "../../../src";
+import { MockEvent, MockEvent__factory, MockEvents, MockEvents__factory } from "../../typechain";
 import { EventEvent } from "../../typechain/MockEvent";
 import { MultipleEvent } from "../../typechain/MockEvents";
 
 describe("expectAllEvents / expectEvents", () => {
   let mockEvent: MockEvent;
   let mockEvents: MockEvents;
-  let multicall: Multicall;
 
   let alice: SignerWithAddress;
   let bob: SignerWithAddress;
@@ -29,7 +22,6 @@ describe("expectAllEvents / expectEvents", () => {
     [alice, bob, charlie] = await ethers.getSigners();
     mockEvent = await new MockEvent__factory(alice).deploy();
     mockEvents = await new MockEvents__factory(alice).deploy();
-    multicall = await new Multicall__factory(alice).deploy();
   });
 
   describe("Single event", () => {

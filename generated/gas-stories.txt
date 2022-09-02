@@ -1,0 +1,34 @@
+
+·····
+· B ·
+·····
+
+    MockEvent
+     21,985 - emitEvent
+    439,700 - emitEvent again
+    879,400 - emitEvent big
+    9,233,700 - emitEvent huge
+
+        emitEvent2
+         43,970 - okay
+
+            deep
+             65,955 - example
+             21,985 - example2
+             87,940 - example3
+
+·············
+· MockEvent ·
+·············
+ 21,985 - emitEvent
+439,700 - emitEvent again
+879,400 - emitEvent big
+9,233,700 - emitEvent huge
+
+    emitEvent2
+     43,970 - okay
+
+        deep
+         65,955 - example
+         21,985 - example2
+         87,940 - example3
