@@ -32,26 +32,26 @@ describe("gasStories / gasB", () => {
 
   it("Record", async () => {
     tx = await mockEvent.emitEvent();
-    await gasStory(tx, ["B", "MockEvent", "emitEvent"]);
+    await gasStory(tx, "B", "MockEvent", "emitEvent");
     let events: ContractTransaction[] = [];
     for (let i = 0; i < 20; i++) {
       events.push(tx);
     }
-    await gasStory([...events, ...events], ["B", "MockEvent", "emitEvent big"]);
-    await gasStory(events, ["B", "MockEvent", "emitEvent again"]);
+    await gasStory([...events, ...events], "B", "MockEvent", "emitEvent big");
+    await gasStory(events, "B", "MockEvent", "emitEvent again");
     for (let i = 0; i < 400; i++) {
       events.push(tx);
     }
-    await gasStory(events, ["B", "MockEvent", "emitEvent huge"]);
+    await gasStory(events, "B", "MockEvent", "emitEvent huge");
   });
   it("Record", async () => {
     tx = await mockEvent.emitEvent();
-    await gasStory([tx, tx], ["B", "MockEvent", "emitEvent2", "okay"]);
+    await gasStory([tx, tx], "B", "MockEvent", "emitEvent2", "okay");
   });
   it("Record", async () => {
     tx = await mockEvent.emitEvent();
-    await gasStory([tx, tx, tx, tx], ["B", "MockEvent", "emitEvent2", "deep", "example3"]);
-    await gasStory([tx], ["B", "MockEvent", "emitEvent2", "deep", "example2"]);
-    await gasStory([tx, tx, tx], ["B", "MockEvent", "emitEvent2", "deep", "example"]);
+    await gasStory([tx, tx, tx, tx], "B", "MockEvent", "emitEvent2", "deep", "example3");
+    await gasStory([tx], "B", "MockEvent", "emitEvent2", "deep", "example2");
+    await gasStory([tx, tx, tx], "B", "MockEvent", "emitEvent2", "deep", "example");
   });
 });

@@ -29,7 +29,10 @@ type GasRecord = {
 let records: GasRecord = {};
 let resultsLog = "";
 
-export async function gasStory(tx: ContractTransaction | ContractTransaction[], categories: string[]): Promise<void> {
+export async function gasStory(
+  tx: ContractTransaction | ContractTransaction[],
+  ...categories: string[]
+): Promise<void> {
   let gasUsed = BigNumber.from(0);
   if (Array.isArray(tx)) {
     for (const t of tx) {
