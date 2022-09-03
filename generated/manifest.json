@@ -1,13 +1,13 @@
 [
   {
-    "id": "hardhat-helpers@0.1.21",
+    "id": "hardhat-helpers@0.1.22",
     "name": "hardhat-helpers",
-    "version": "0.1.21",
-    "size": 31428,
-    "unpackedSize": 192757,
-    "shasum": "1897ef16563be4d0ad98d55490a4827b694a0d8b",
-    "integrity": "sha512-jdC3dgXgyj8yqc7NGJRVqmiBW9TcrpqY3MVA0KSYbbmd4gGsV8FwfsskyugOuWUPArMxehxl7guZNZRaj1ciLg==",
-    "filename": "hardhat-helpers-0.1.21.tgz",
+    "version": "0.1.22",
+    "size": 31548,
+    "unpackedSize": 193432,
+    "shasum": "db7be7ec2e485278fdeb80bd1a439b7c86d729c9",
+    "integrity": "sha512-tutWE/yh89lML2ky2c9+MQYPgWjFVe1ZN9gHJYs+chu6peQjIhFyPuVhmx/m2gRR6WW7EmGinIneZql7plyM3A==",
+    "filename": "hardhat-helpers-0.1.22.tgz",
     "files": [
       {
         "path": "LICENSE",
@@ -91,12 +91,12 @@
       },
       {
         "path": "dist/gasStories.js",
-        "size": 5466,
+        "size": 5632,
         "mode": 420
       },
       {
         "path": "dist/gasStories.js.map",
-        "size": 5215,
+        "size": 5462,
         "mode": 420
       },
       {
@@ -401,7 +401,7 @@
       },
       {
         "path": "src/gasStories.ts",
-        "size": 4837,
+        "size": 5099,
         "mode": 420
       },
       {

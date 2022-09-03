@@ -94,8 +94,8 @@ function printRecords(records: GasRecord, depth: number, printValues = true) {
       }
       const tab = "".padStart(4 * (depth - 1));
 
-      console.log(`${tab}${getPrintedCost(record)} - ${key}`);
-      resultsLog += `${tab}${getPrintedCost(record, false, false)} - ${key}\n`;
+      console.log(`${tab}${getPrintedCost(record, {})} - ${key}`);
+      resultsLog += `${tab}${getPrintedCost(record, { shouldChalk: false, includeDollarEst: false })} - ${key}\n`;
     } else {
       if (printValues) continue;
       if (depth === 0) {
@@ -128,14 +128,21 @@ function calcGasCost(gasUsed: BigNumber) {
   );
 }
 
-function getPrintedCost(gasUsed: BigNumber, shouldChalk = true, includeDollarEst = true): string {
+function getPrintedCost(
+  gasUsed: BigNumber,
+  {
+    shouldChalk = true,
+    shouldPad = true,
+    includeDollarEst = true,
+  }: { shouldChalk?: boolean; shouldPad?: boolean; includeDollarEst?: boolean }
+): string {
   let costString = "";
   if (includeDollarEst) {
     const cost = calcGasCost(gasUsed);
     costString = `$${cost.toLocaleString(undefined, {
       maximumFractionDigits: 2,
       minimumFractionDigits: 2,
-    })} `.padStart(8);
+    })} `.padStart(shouldPad ? 8 : 0);
     if (shouldChalk) {
       costString = `${chalk.greenBright(costString)}`;
     }
@@ -147,14 +154,14 @@ function getPrintedCost(gasUsed: BigNumber, shouldChalk = true, includeDollarEst
   if (includeDollarEst) {
     gasString = `(${gasString})`;
   }
-  gasString = gasString.padStart(includeDollarEst ? 19 : 7);
+  gasString = gasString.padStart(shouldPad ? (includeDollarEst ? 19 : 7) : 0);
   return `${costString}${gasString}`;
 }
 
 function getPrintedCostRange(minGasUsed: BigNumber | undefined, maxGasUsed: BigNumber | undefined): string | undefined {
   if (minGasUsed && maxGasUsed && !minGasUsed.eq(maxGasUsed)) {
-    const min = getPrintedCost(minGasUsed, false);
-    const max = getPrintedCost(maxGasUsed, false);
+    const min = getPrintedCost(minGasUsed, { shouldChalk: false, shouldPad: false });
+    const max = getPrintedCost(maxGasUsed, { shouldChalk: false, shouldPad: false });
     return chalk.cyan(`Range: ${min} - ${max}`);
   }
 }
