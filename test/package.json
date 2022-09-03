@@ -1,0 +1,42 @@
+{
+  "scripts": {
+    "build": "hardhat typechain",
+    "lint": "yarn lint:prettier && yarn lint:solhint && yarn lint:eslint",
+    "lint:prettier": "prettier --write \"**/*.{json,md,sol,yml,ts}\"",
+    "lint:eslint": "eslint --fix --config ../.eslintrc.yaml --ignore-path ./.eslintignore --ext .ts .",
+    "lint:solhint": "solhint --fix \"{contracts,test/contracts}/**/*.sol\"",
+    "prepPublish": "rm -rf ./dist && yarn && yarn lint && yarn build && yarn test && yarn testScript",
+    "test": "GAS_STORIES_FILE=./generated/gas-stories.txt hardhat test",
+    "testScript": "hardhat run scripts/exampleScript.ts"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-chai-matchers": "1.0.3",
+    "@nomicfoundation/hardhat-network-helpers": "1.0.4",
+    "@nomicfoundation/hardhat-toolbox": "1.0.2",
+    "@nomiclabs/hardhat-ethers": "2.1.1",
+    "@nomiclabs/hardhat-etherscan": "3.1.0",
+    "@openzeppelin/contracts": "4.7.3",
+    "@typechain/ethers-v5": "10.1.0",
+    "@typechain/hardhat": "6.1.2",
+    "@types/chai": "4.3.3",
+    "@types/mocha": "9.1.1",
+    "@typescript-eslint/eslint-plugin": "5.36.1",
+    "@typescript-eslint/parser": "5.36.1",
+    "chai": "4.3.6",
+    "eslint-plugin-no-only-tests": "3.0.0",
+    "eslint-plugin-simple-import-sort": "7.0.0",
+    "ethers": "5.7.0",
+    "hardhat": "2.10.2",
+    "hardhat-gas-reporter": "1.0.8",
+    "hardhat-tracer": "1.1.0-rc.8",
+    "mocha": "10.0.0",
+    "prettier": "2.7.1",
+    "prettier-plugin-solidity": "1.0.0-dev.23",
+    "solhint": "3.3.7",
+    "solidity-coverage": "0.7.21",
+    "ts-node": "10.9.1",
+    "tsc": "2.0.4",
+    "typechain": "8.1.0",
+    "typescript": "4.8.2"
+  }
+}

@@ -1,0 +1,481 @@
+[
+  {
+    "id": "hardhat-helpers@0.1.21",
+    "name": "hardhat-helpers",
+    "version": "0.1.21",
+    "size": 31428,
+    "unpackedSize": 192757,
+    "shasum": "1897ef16563be4d0ad98d55490a4827b694a0d8b",
+    "integrity": "sha512-jdC3dgXgyj8yqc7NGJRVqmiBW9TcrpqY3MVA0KSYbbmd4gGsV8FwfsskyugOuWUPArMxehxl7guZNZRaj1ciLg==",
+    "filename": "hardhat-helpers-0.1.21.tgz",
+    "files": [
+      {
+        "path": "LICENSE",
+        "size": 1072,
+        "mode": 420
+      },
+      {
+        "path": "README.md",
+        "size": 1721,
+        "mode": 420
+      },
+      {
+        "path": "dist/balance.d.ts",
+        "size": 309,
+        "mode": 420
+      },
+      {
+        "path": "dist/balance.d.ts.map",
+        "size": 334,
+        "mode": 420
+      },
+      {
+        "path": "dist/balance.js",
+        "size": 1046,
+        "mode": 420
+      },
+      {
+        "path": "dist/balance.js.map",
+        "size": 816,
+        "mode": 420
+      },
+      {
+        "path": "dist/events.d.ts",
+        "size": 736,
+        "mode": 420
+      },
+      {
+        "path": "dist/events.d.ts.map",
+        "size": 684,
+        "mode": 420
+      },
+      {
+        "path": "dist/events.js",
+        "size": 2195,
+        "mode": 420
+      },
+      {
+        "path": "dist/events.js.map",
+        "size": 1917,
+        "mode": 420
+      },
+      {
+        "path": "dist/fork.d.ts",
+        "size": 283,
+        "mode": 420
+      },
+      {
+        "path": "dist/fork.d.ts.map",
+        "size": 285,
+        "mode": 420
+      },
+      {
+        "path": "dist/fork.js",
+        "size": 846,
+        "mode": 420
+      },
+      {
+        "path": "dist/fork.js.map",
+        "size": 587,
+        "mode": 420
+      },
+      {
+        "path": "dist/gasStories.d.ts",
+        "size": 209,
+        "mode": 420
+      },
+      {
+        "path": "dist/gasStories.d.ts.map",
+        "size": 277,
+        "mode": 420
+      },
+      {
+        "path": "dist/gasStories.js",
+        "size": 5466,
+        "mode": 420
+      },
+      {
+        "path": "dist/gasStories.js.map",
+        "size": 5215,
+        "mode": 420
+      },
+      {
+        "path": "dist/index.d.ts",
+        "size": 321,
+        "mode": 420
+      },
+      {
+        "path": "dist/index.d.ts.map",
+        "size": 331,
+        "mode": 420
+      },
+      {
+        "path": "dist/index.js",
+        "size": 1830,
+        "mode": 420
+      },
+      {
+        "path": "dist/index.js.map",
+        "size": 259,
+        "mode": 420
+      },
+      {
+        "path": "dist/mainnet/dai.d.ts",
+        "size": 232,
+        "mode": 420
+      },
+      {
+        "path": "dist/mainnet/dai.d.ts.map",
+        "size": 274,
+        "mode": 420
+      },
+      {
+        "path": "dist/mainnet/dai.js",
+        "size": 857,
+        "mode": 420
+      },
+      {
+        "path": "dist/mainnet/dai.js.map",
+        "size": 615,
+        "mode": 420
+      },
+      {
+        "path": "dist/mainnet/index.d.ts",
+        "size": 58,
+        "mode": 420
+      },
+      {
+        "path": "dist/mainnet/index.d.ts.map",
+        "size": 134,
+        "mode": 420
+      },
+      {
+        "path": "dist/mainnet/index.js",
+        "size": 831,
+        "mode": 420
+      },
+      {
+        "path": "dist/mainnet/index.js.map",
+        "size": 140,
+        "mode": 420
+      },
+      {
+        "path": "dist/snapshotEach.d.ts",
+        "size": 234,
+        "mode": 420
+      },
+      {
+        "path": "dist/snapshotEach.d.ts.map",
+        "size": 289,
+        "mode": 420
+      },
+      {
+        "path": "dist/snapshotEach.js",
+        "size": 2856,
+        "mode": 420
+      },
+      {
+        "path": "dist/snapshotEach.js.map",
+        "size": 1857,
+        "mode": 420
+      },
+      {
+        "path": "dist/storage.d.ts",
+        "size": 797,
+        "mode": 420
+      },
+      {
+        "path": "dist/storage.d.ts.map",
+        "size": 855,
+        "mode": 420
+      },
+      {
+        "path": "dist/storage.js",
+        "size": 2057,
+        "mode": 420
+      },
+      {
+        "path": "dist/storage.js.map",
+        "size": 1878,
+        "mode": 420
+      },
+      {
+        "path": "dist/testBehaviors/index.d.ts",
+        "size": 78,
+        "mode": 420
+      },
+      {
+        "path": "dist/testBehaviors/index.d.ts.map",
+        "size": 142,
+        "mode": 420
+      },
+      {
+        "path": "dist/testBehaviors/index.js",
+        "size": 851,
+        "mode": 420
+      },
+      {
+        "path": "dist/testBehaviors/index.js.map",
+        "size": 146,
+        "mode": 420
+      },
+      {
+        "path": "dist/testBehaviors/shouldSupportInterfaces.d.ts",
+        "size": 307,
+        "mode": 420
+      },
+      {
+        "path": "dist/testBehaviors/shouldSupportInterfaces.d.ts.map",
+        "size": 405,
+        "mode": 420
+      },
+      {
+        "path": "dist/testBehaviors/shouldSupportInterfaces.js",
+        "size": 3672,
+        "mode": 420
+      },
+      {
+        "path": "dist/testBehaviors/shouldSupportInterfaces.js.map",
+        "size": 2624,
+        "mode": 420
+      },
+      {
+        "path": "dist/time.d.ts",
+        "size": 574,
+        "mode": 420
+      },
+      {
+        "path": "dist/time.d.ts.map",
+        "size": 543,
+        "mode": 420
+      },
+      {
+        "path": "dist/time.js",
+        "size": 1762,
+        "mode": 420
+      },
+      {
+        "path": "dist/time.js.map",
+        "size": 1349,
+        "mode": 420
+      },
+      {
+        "path": "dist/tracer.d.ts",
+        "size": 219,
+        "mode": 420
+      },
+      {
+        "path": "dist/tracer.d.ts.map",
+        "size": 285,
+        "mode": 420
+      },
+      {
+        "path": "dist/tracer.js",
+        "size": 646,
+        "mode": 420
+      },
+      {
+        "path": "dist/tracer.js.map",
+        "size": 467,
+        "mode": 420
+      },
+      {
+        "path": "dist/typechain/common.d.ts",
+        "size": 1164,
+        "mode": 420
+      },
+      {
+        "path": "dist/typechain/common.d.ts.map",
+        "size": 1298,
+        "mode": 420
+      },
+      {
+        "path": "dist/typechain/common.js",
+        "size": 111,
+        "mode": 420
+      },
+      {
+        "path": "dist/typechain/common.js.map",
+        "size": 117,
+        "mode": 420
+      },
+      {
+        "path": "dist/typechain/Dai.d.ts",
+        "size": 24442,
+        "mode": 420
+      },
+      {
+        "path": "dist/typechain/Dai.d.ts.map",
+        "size": 24600,
+        "mode": 420
+      },
+      {
+        "path": "dist/typechain/Dai.js",
+        "size": 108,
+        "mode": 420
+      },
+      {
+        "path": "dist/typechain/Dai.js.map",
+        "size": 111,
+        "mode": 420
+      },
+      {
+        "path": "dist/typechain/factories/Dai__factory.d.ts",
+        "size": 1455,
+        "mode": 420
+      },
+      {
+        "path": "dist/typechain/factories/Dai__factory.d.ts.map",
+        "size": 505,
+        "mode": 420
+      },
+      {
+        "path": "dist/typechain/factories/Dai__factory.js",
+        "size": 13555,
+        "mode": 420
+      },
+      {
+        "path": "dist/typechain/factories/Dai__factory.js.map",
+        "size": 8849,
+        "mode": 420
+      },
+      {
+        "path": "dist/typechain/factories/index.d.ts",
+        "size": 82,
+        "mode": 420
+      },
+      {
+        "path": "dist/typechain/factories/index.d.ts.map",
+        "size": 171,
+        "mode": 420
+      },
+      {
+        "path": "dist/typechain/factories/index.js",
+        "size": 407,
+        "mode": 420
+      },
+      {
+        "path": "dist/typechain/factories/index.js.map",
+        "size": 203,
+        "mode": 420
+      },
+      {
+        "path": "dist/typechain/index.d.ts",
+        "size": 168,
+        "mode": 420
+      },
+      {
+        "path": "dist/typechain/index.d.ts.map",
+        "size": 235,
+        "mode": 420
+      },
+      {
+        "path": "dist/typechain/index.js",
+        "size": 1432,
+        "mode": 420
+      },
+      {
+        "path": "dist/typechain/index.js.map",
+        "size": 187,
+        "mode": 420
+      },
+      {
+        "path": "package.json",
+        "size": 2345,
+        "mode": 420
+      },
+      {
+        "path": "src/balance.ts",
+        "size": 812,
+        "mode": 420
+      },
+      {
+        "path": "src/events.ts",
+        "size": 2326,
+        "mode": 420
+      },
+      {
+        "path": "src/fork.ts",
+        "size": 644,
+        "mode": 420
+      },
+      {
+        "path": "src/gasStories.ts",
+        "size": 4837,
+        "mode": 420
+      },
+      {
+        "path": "src/index.ts",
+        "size": 286,
+        "mode": 420
+      },
+      {
+        "path": "src/mainnet/dai.ts",
+        "size": 702,
+        "mode": 420
+      },
+      {
+        "path": "src/mainnet/index.ts",
+        "size": 23,
+        "mode": 420
+      },
+      {
+        "path": "src/snapshotEach.ts",
+        "size": 2379,
+        "mode": 420
+      },
+      {
+        "path": "src/storage.ts",
+        "size": 1741,
+        "mode": 420
+      },
+      {
+        "path": "src/testBehaviors/index.ts",
+        "size": 43,
+        "mode": 420
+      },
+      {
+        "path": "src/testBehaviors/shouldSupportInterfaces.ts",
+        "size": 3388,
+        "mode": 420
+      },
+      {
+        "path": "src/time.ts",
+        "size": 1417,
+        "mode": 420
+      },
+      {
+        "path": "src/tracer.ts",
+        "size": 504,
+        "mode": 420
+      },
+      {
+        "path": "src/typechain/common.ts",
+        "size": 1199,
+        "mode": 420
+      },
+      {
+        "path": "src/typechain/Dai.ts",
+        "size": 25365,
+        "mode": 420
+      },
+      {
+        "path": "src/typechain/factories/Dai__factory.ts",
+        "size": 10413,
+        "mode": 420
+      },
+      {
+        "path": "src/typechain/factories/index.ts",
+        "size": 137,
+        "mode": 420
+      },
+      {
+        "path": "src/typechain/index.ts",
+        "size": 223,
+        "mode": 420
+      }
+    ],
+    "entryCount": 93,
+    "bundled": []
+  }
+]

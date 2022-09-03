@@ -5,8 +5,8 @@ import { ethers } from "hardhat";
 
 import { getEvent, snapshotEach } from "../../../src";
 import { MockEvent, MockEvent__factory, MockEvents, MockEvents__factory } from "../../typechain";
-import { EventEvent } from "../../typechain/MockEvent";
-import { MultipleEvent } from "../../typechain/MockEvents";
+import { EventEvent } from "../../typechain/contracts/MockEvent";
+import { MultipleEvent } from "../../typechain/contracts/MockEvents";
 
 describe("expectAllEvents / expectEvents", () => {
   let mockEvent: MockEvent;
