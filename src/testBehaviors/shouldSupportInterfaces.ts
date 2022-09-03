@@ -1,11 +1,18 @@
 // Originally from https://raw.githubusercontent.com/OpenZeppelin/openzeppelin-contracts-upgradeable/master/test/introspection/SupportsInterface.behavior.js
 import { expect } from "chai";
 import { Contract } from "ethers";
+import { FunctionFragment } from "ethers/lib/utils";
 import { ethers } from "hardhat";
 
-export const INTERFACES: { [key: string]: string[] } = {
-  ERC165: ["supportsInterface(bytes4)"],
-  ERC721: [
+export const INTERFACES: { [key: string]: string[] } = {};
+
+// 165: Standard Interface Detection
+register165Interface("ERC165", ["supportsInterface(bytes4)"], "0x01ffc9a7");
+
+// 721: Non-Fungible Token Standard
+register165Interface(
+  "ERC721",
+  [
     "balanceOf(address)",
     "ownerOf(uint256)",
     "approve(address,uint256)",
@@ -16,9 +23,20 @@ export const INTERFACES: { [key: string]: string[] } = {
     "safeTransferFrom(address,address,uint256)",
     "safeTransferFrom(address,address,uint256,bytes)",
   ],
-  ERC721Enumerable: ["totalSupply()", "tokenOfOwnerByIndex(address,uint256)", "tokenByIndex(uint256)"],
-  ERC721Metadata: ["name()", "symbol()", "tokenURI(uint256)"],
-  ERC1155: [
+  "0x80ac58cd"
+);
+register165Interface(
+  "ERC721Enumerable",
+  ["totalSupply()", "tokenOfOwnerByIndex(address,uint256)", "tokenByIndex(uint256)"],
+  "0x780e9d63"
+);
+register165Interface("ERC721Metadata", ["name()", "symbol()", "tokenURI(uint256)"], "0x5b5e139f");
+register165Interface("ERC721TokenReceiver", ["onERC721Received(address,address,uint256,bytes)"], "0x150b7a02");
+
+// 1155: Multi Token Standard
+register165Interface(
+  "ERC1155",
+  [
     "balanceOf(address,uint256)",
     "balanceOfBatch(address[],uint256[])",
     "setApprovalForAll(address,bool)",
@@ -26,14 +44,73 @@ export const INTERFACES: { [key: string]: string[] } = {
     "safeTransferFrom(address,address,uint256,uint256,bytes)",
     "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)",
   ],
-  ERC1155Receiver: [
+  "0xd9b67a26"
+);
+register165Interface(
+  "ERC1155TokenReceiver",
+  [
     "onERC1155Received(address,address,uint256,uint256,bytes)",
     "onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)",
   ],
-  ERC2981: ["royaltyInfo(uint256,uint256)"],
-};
+  "0x4e2312e0"
+);
+register165Interface("ERC1155Metadata_URI", ["uri(uint256)"], "0x0e89341c");
 
-export async function shouldSupportInterfaces(
+// 2981: NFT Royalty Standard
+register165Interface("ERC2981", ["royaltyInfo(uint256,uint256)"], "0x2a55205a");
+
+// 4907: Rental NFT, an Extension of EIP-721
+register165Interface(
+  "ERC4907",
+  ["setUser(uint256,address,uint64)", "userOf(uint256)", "userExpires(uint256)"],
+  "0xad092b5c"
+);
+
+// 5006: Rental NFT, NFT User Extension
+register165Interface(
+  "ERC5006",
+  [
+    "usableBalanceOf(address,uint256)",
+    "frozenBalanceOf(address,uint256)",
+    "userRecordOf(uint256)",
+    "createUserRecord(address,address,uint256,uint64,uint64)",
+    "deleteUserRecord(uint256)",
+  ],
+  "0xc26d96cc"
+);
+
+export function register165InterfaceFromContract(
+  interfaceName: string,
+  contract: { interface: { functions: { [functionSig: string]: FunctionFragment } } },
+  expectedInterfaceId?: string
+): void {
+  register165Interface(interfaceName, Object.keys(contract.interface.functions), expectedInterfaceId);
+}
+
+export function register165InterfaceFromFactory(
+  interfaceName: string,
+  contract: { createInterface(): { functions: { [functionSig: string]: FunctionFragment } } },
+  expectedInterfaceId?: string
+): void {
+  register165Interface(interfaceName, Object.keys(contract.createInterface().functions), expectedInterfaceId);
+}
+
+export function register165Interface(interfaceName: string, functions: string[], expectedInterfaceId?: string): void {
+  const existingInterface = INTERFACES[interfaceName];
+  if (existingInterface) {
+    expect(JSON.stringify(functions.sort())).to.eq(
+      JSON.stringify(INTERFACES[interfaceName].sort()),
+      `Interface ${interfaceName} already registered with different functions`
+    );
+  }
+  if (expectedInterfaceId) {
+    const interfaceId = makeInterfaceId(functions);
+    expect(interfaceId).to.eq(expectedInterfaceId, `Interface ${interfaceName} has unexpected interface ID`);
+  }
+  INTERFACES[interfaceName] = functions;
+}
+
+export async function shouldSupport165Interfaces(
   contract: Contract,
   interfaces: string | string[],
   supportedButNotRegistered = false

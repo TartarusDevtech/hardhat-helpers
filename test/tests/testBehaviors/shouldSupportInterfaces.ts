@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
 
-import { INTERFACES, shouldSupportInterfaces, snapshotEach } from "../../../src";
+import { INTERFACES, shouldSupport165Interfaces, snapshotEach } from "../../../src";
 import { BasicERC721, BasicERC721__factory } from "../../typechain";
 
 describe("testBehaviors / shouldSupportInterfaces", () => {
@@ -13,23 +13,25 @@ describe("testBehaviors / shouldSupportInterfaces", () => {
   });
 
   it("Check interface", async () => {
-    await shouldSupportInterfaces(erc721, "ERC721");
+    await shouldSupport165Interfaces(erc721, "ERC721");
   });
 
   it("Check multiple interfaces", async () => {
-    await shouldSupportInterfaces(erc721, ["ERC165", "ERC721"]);
+    await shouldSupport165Interfaces(erc721, ["ERC165", "ERC721"]);
   });
 
   it("Throws if the interface is unknown", async () => {
-    await expect(shouldSupportInterfaces(erc721, "Unknown")).to.be.rejectedWith('Unknown interface "Unknown"');
+    await expect(shouldSupport165Interfaces(erc721, "Unknown")).to.be.rejectedWith('Unknown interface "Unknown"');
   });
 
   it("Fails if the interface is not supported", async () => {
-    await expect(shouldSupportInterfaces(erc721, "ERC2981")).to.be.rejectedWith('Does not claim support for "ERC2981"');
+    await expect(shouldSupport165Interfaces(erc721, "ERC2981")).to.be.rejectedWith(
+      'Does not claim support for "ERC2981"'
+    );
   });
 
   it("Can push new interfaces", async () => {
     INTERFACES["New"] = ["new()"];
-    await expect(shouldSupportInterfaces(erc721, "New")).to.be.rejectedWith('Does not claim support for "New"');
+    await expect(shouldSupport165Interfaces(erc721, "New")).to.be.rejectedWith('Does not claim support for "New"');
   });
 });

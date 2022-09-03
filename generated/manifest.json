@@ -1,13 +1,13 @@
 [
   {
-    "id": "hardhat-helpers@0.1.22",
+    "id": "hardhat-helpers@0.1.23",
     "name": "hardhat-helpers",
-    "version": "0.1.22",
-    "size": 31548,
-    "unpackedSize": 193432,
-    "shasum": "db7be7ec2e485278fdeb80bd1a439b7c86d729c9",
-    "integrity": "sha512-tutWE/yh89lML2ky2c9+MQYPgWjFVe1ZN9gHJYs+chu6peQjIhFyPuVhmx/m2gRR6WW7EmGinIneZql7plyM3A==",
-    "filename": "hardhat-helpers-0.1.22.tgz",
+    "version": "0.1.23",
+    "size": 33159,
+    "unpackedSize": 200981,
+    "shasum": "0364fdac1132e357da962822fabc45cc8cbf7619",
+    "integrity": "sha512-Z2Z6GWUBVWn3VOgN1LpSDVvUg5XKLEYoN9QNb9oac7JPZF1ohnA5PELTbelZ1OmTHrlz25ZQjSOFnmuN4uNGWw==",
+    "filename": "hardhat-helpers-0.1.23.tgz",
     "files": [
       {
         "path": "LICENSE",
@@ -221,22 +221,22 @@
       },
       {
         "path": "dist/testBehaviors/shouldSupportInterfaces.d.ts",
-        "size": 307,
+        "size": 978,
         "mode": 420
       },
       {
         "path": "dist/testBehaviors/shouldSupportInterfaces.d.ts.map",
-        "size": 405,
+        "size": 951,
         "mode": 420
       },
       {
         "path": "dist/testBehaviors/shouldSupportInterfaces.js",
-        "size": 3672,
+        "size": 6010,
         "mode": 420
       },
       {
         "path": "dist/testBehaviors/shouldSupportInterfaces.js.map",
-        "size": 2624,
+        "size": 4188,
         "mode": 420
       },
       {
@@ -436,7 +436,7 @@
       },
       {
         "path": "src/testBehaviors/shouldSupportInterfaces.ts",
-        "size": 3388,
+        "size": 5818,
         "mode": 420
       },
       {
