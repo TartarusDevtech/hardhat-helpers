@@ -133,7 +133,7 @@ export async function shouldSupport165Interfaces(
     interfaces = [interfaces];
   }
 
-  if (!interfaces.includes("ERC165")) {
+  if (!interfaces.includes("ERC165") && !supportedButNotRegistered) {
     // ERC165 is always required
     interfaces.unshift("ERC165");
   }
@@ -148,17 +148,16 @@ export async function shouldSupport165Interfaces(
       `${interfaceName} (${interfaceId}) uses more than 32k gas`
     );
     expect(await contract.supportsInterface(interfaceId)).to.equal(
-      true,
-      `Does not claim support for "${interfaceName}" (${interfaceId})`
+      !supportedButNotRegistered,
+      (supportedButNotRegistered ? "Unexpectedly claims support" : "Does not claim support") +
+        ` for "${interfaceName}" (${interfaceId})`
     );
 
-    if (!supportedButNotRegistered) {
-      for (const fnName of INTERFACES[interfaceName]) {
-        expect(contract.functions[fnName]).not.to.eq(
-          null,
-          `${fnName} has to be implemented for ${interfaceName} (${interfaceId})`
-        );
-      }
+    for (const fnName of INTERFACES[interfaceName]) {
+      expect(contract.functions[fnName]).not.to.eq(
+        null,
+        `${fnName} has to be implemented for ${interfaceName} (${interfaceId})`
+      );
     }
   }
 }
