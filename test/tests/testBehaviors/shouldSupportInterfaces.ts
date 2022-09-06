@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
 
-import { INTERFACES, shouldSupport165Interfaces, snapshotEach } from "../../../src";
+import { get165InterfaceId, INTERFACES, shouldSupport165Interfaces, snapshotEach } from "../../../src";
 import { BasicERC721, BasicERC721__factory } from "../../typechain";
 
 describe("testBehaviors / shouldSupportInterfaces", () => {
@@ -33,5 +33,10 @@ describe("testBehaviors / shouldSupportInterfaces", () => {
   it("Can push new interfaces", async () => {
     INTERFACES["New"] = ["new()"];
     await expect(shouldSupport165Interfaces(erc721, "New")).to.be.rejectedWith('Does not claim support for "New"');
+  });
+
+  it("Can get interfaceId", async () => {
+    const interfaceId = await get165InterfaceId("ERC721");
+    expect(interfaceId).to.eq("0x80ac58cd");
   });
 });

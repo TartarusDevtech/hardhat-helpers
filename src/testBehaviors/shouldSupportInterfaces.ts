@@ -110,6 +110,14 @@ export function register165Interface(interfaceName: string, functions: string[],
   INTERFACES[interfaceName] = functions;
 }
 
+export function get165InterfaceId(interfaceName: string): string {
+  const functions = INTERFACES[interfaceName];
+  if (!functions) {
+    throw new Error(`Interface ${interfaceName} not registered`);
+  }
+  return makeInterfaceId(functions);
+}
+
 export async function shouldSupport165Interfaces(
   contract: Contract,
   interfaces: string | string[],
