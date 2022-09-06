@@ -148,16 +148,17 @@ export async function shouldSupport165Interfaces(
       `${interfaceName} (${interfaceId}) uses more than 32k gas`
     );
     expect(await contract.supportsInterface(interfaceId)).to.equal(
-      !supportedButNotRegistered,
-      (supportedButNotRegistered ? "Unexpectedly claims support" : "Does not claim support") +
-        ` for "${interfaceName}" (${interfaceId})`
+      true,
+      `Does not claim support for "${interfaceName}" (${interfaceId})`
     );
 
-    for (const fnName of INTERFACES[interfaceName]) {
-      expect(contract.functions[fnName]).not.to.eq(
-        null,
-        `${fnName} has to be implemented for ${interfaceName} (${interfaceId})`
-      );
+    if (!supportedButNotRegistered) {
+      for (const fnName of INTERFACES[interfaceName]) {
+        expect(contract.functions[fnName]).not.to.eq(
+          null,
+          `${fnName} has to be implemented for ${interfaceName} (${interfaceId})`
+        );
+      }
     }
   }
 }
