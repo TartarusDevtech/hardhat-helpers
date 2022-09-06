@@ -5,8 +5,8 @@
     "version": "0.1.23",
     "size": 33162,
     "unpackedSize": 200981,
-    "shasum": "0c4e9e3f43d519bf78b291eee29c836cf1a1a03b",
-    "integrity": "sha512-JOdRaRC3xFnxI6QHDeqCSbszU3ZwEqR/IzGAnCtlI1Cb+Y6uJaEbYCXSdbYwJ1NEGZYQpqbdLCeF7KJeJ2M6Zw==",
+    "shasum": "ee46f06ad7f70e7426dce7e7b7719e19ae31ebf0",
+    "integrity": "sha512-qPKFDu3m3zSsdoFscfz0/SDVG5MSCaeIG5tUZozqVlC96yeV69tY8IyPfHIWJg7K3yGc2cTl+uUXPchOejLwpA==",
     "filename": "hardhat-helpers-0.1.23.tgz",
     "files": [
       {
