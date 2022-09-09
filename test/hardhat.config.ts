@@ -9,7 +9,7 @@ const config: HardhatUserConfig = {
     cache: "./generated/cache",
     sources: "./contracts",
   },
-  solidity: "0.8.16",
+  solidity: "0.8.17",
   typechain: {
     outDir: "./typechain",
   },
