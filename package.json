@@ -13,7 +13,7 @@
     "lint": "yarn lint:prettier && yarn lint:eslint && cd test && yarn lint",
     "lint:prettier": "prettier --write \"**/*.{json,md,sol,yml,ts}\"",
     "lint:eslint": "eslint --fix --config ./.eslintrc.yaml --ignore-path ./.eslintignore --ext .ts .",
-    "manifest": "npm pack --dry-run --json > generated/manifest.json",
+    "manifest": "npm pack --dry-run --json | ts-node scripts/writeManifest.ts",
     "prepPublish": "rm -rf ./dist && yarn && yarn lint && yarn build && cd test && yarn && yarn build && yarn test && yarn testScript && cd .. && yarn manifest",
     "typechain": "typechain --target ethers-v5 --out-dir ./src/typechain ./abis/**/*.json"
   },
@@ -44,6 +44,7 @@
     "eslint-plugin-no-only-tests": "3.0.0",
     "eslint-plugin-simple-import-sort": "8.0.0",
     "ethers": "5.7.0",
+    "fs": "0.0.1-security",
     "hardhat": "2.10.2",
     "hardhat-gas-reporter": "1.0.8",
     "hardhat-tracer": "1.1.0-rc.9",
