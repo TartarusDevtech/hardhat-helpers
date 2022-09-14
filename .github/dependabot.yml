@@ -8,3 +8,11 @@ updates:
       time: "01:00"
       timezone: "America/New_York"
     open-pull-requests-limit: 200
+  - package-ecosystem: "npm"
+    directory: "/test/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "01:00"
+      timezone: "America/New_York"
+    open-pull-requests-limit: 200
