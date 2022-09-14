@@ -27,7 +27,7 @@
     "eslint-plugin-simple-import-sort": "7.0.0",
     "ethers": "5.7.0",
     "hardhat": "2.10.2",
-    "hardhat-gas-reporter": "1.0.8",
+    "hardhat-gas-reporter": "1.0.9",
     "hardhat-tracer": "1.1.0-rc.8",
     "mocha": "10.0.0",
     "prettier": "2.7.1",
