@@ -4,7 +4,7 @@ import { BigNumberish, ContractTransaction } from "ethers";
 import { ethers } from "hardhat";
 
 import { getEvent, snapshotEach } from "../../../src";
-import { MockEvent, MockEvent__factory, MockEvents, MockEvents__factory } from "../../typechain";
+import { MockEvent, MockEvent__factory, MockEvents, MockEvents__factory, Multicall__factory } from "../../typechain";
 import { EventEvent } from "../../typechain/contracts/MockEvent";
 import { MultipleEvent } from "../../typechain/contracts/MockEvents";
 
@@ -31,13 +31,13 @@ describe("expectAllEvents / expectEvents", () => {
 
     it("getEvent from contract", async () => {
       const event = await getEvent<EventEvent>(tx, mockEvent, mockEvent.interface.events["Event()"]);
-      console.log(event);
+      expect(event.event).to.eq("Event");
     });
 
     it("getEvent from factory", async () => {
       const factory = new MockEvent__factory();
       const event = await getEvent<EventEvent>(tx, factory, factory.interface.events["Event()"]);
-      console.log(event);
+      expect(event.event).to.eq("Event");
     });
   });
 
@@ -62,6 +62,22 @@ describe("expectAllEvents / expectEvents", () => {
         mockEvents.interface.events["Multiple(address,address,address,uint256,string,bytes)"]
       );
       expect(event.args.str).to.eq(str);
+    });
+  });
+
+  describe("Event from an external contract", () => {
+    snapshotEach(async () => {
+      const proxy = await new Multicall__factory(alice).deploy();
+      const data = (await mockEvent.populateTransaction.emitEvent()).data;
+      if (!data) throw new Error("No data");
+      tx = await proxy.call([{ to: mockEvent.address, data }]);
+    });
+
+    it("getEvent from contract", async () => {
+      const event = await getEvent<EventEvent>(tx, mockEvent, mockEvent.interface.events["Event()"]);
+      console.log(event);
+      // TODO: How to get parse the event into the standard format when from another contract?
+      // expect(event.event).to.eq("Event");
     });
   });
 });
