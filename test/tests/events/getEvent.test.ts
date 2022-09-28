@@ -62,6 +62,7 @@ describe("expectAllEvents / expectEvents", () => {
         mockEvents.interface.events["Multiple(address,address,address,uint256,string,bytes)"]
       );
       expect(event.args.str).to.eq(str);
+      expect(event.args.from).to.eq(alice.address);
     });
 
     describe("Event from an external contract", () => {
@@ -79,6 +80,7 @@ describe("expectAllEvents / expectEvents", () => {
           mockEvents.interface.events["Multiple(address,address,address,uint256,string,bytes)"]
         );
         expect(event.args.str).to.eq(str);
+        expect(event.args.from).to.eq(alice.address);
       });
     });
   });
