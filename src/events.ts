@@ -24,6 +24,10 @@ export async function getEvent<T extends TypedEvent>(
   if (!event) {
     throw new Error(`Event ${eventFragment.name} not found`);
   }
+
+  // Parse args separately, when it is from an external contract this does not happen automatically.
+  event.args = contract.interface.decodeEventLog(eventFragment, event.data);
+
   return event as unknown as T;
 }
 

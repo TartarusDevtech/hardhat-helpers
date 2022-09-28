@@ -63,21 +63,23 @@ describe("expectAllEvents / expectEvents", () => {
       );
       expect(event.args.str).to.eq(str);
     });
-  });
 
-  describe("Event from an external contract", () => {
-    snapshotEach(async () => {
-      const proxy = await new Multicall__factory(alice).deploy();
-      const data = (await mockEvent.populateTransaction.emitEvent()).data;
-      if (!data) throw new Error("No data");
-      tx = await proxy.call([{ to: mockEvent.address, data }]);
-    });
+    describe("Event from an external contract", () => {
+      snapshotEach(async () => {
+        const proxy = await new Multicall__factory(alice).deploy();
+        const data = (await mockEvents.populateTransaction.emitMultiple(...args)).data;
+        if (!data) throw new Error("No data");
+        tx = await proxy.call([{ to: mockEvents.address, data }]);
+      });
 
-    it("getEvent from contract", async () => {
-      const event = await getEvent<EventEvent>(tx, mockEvent, mockEvent.interface.events["Event()"]);
-      console.log(event);
-      // TODO: How to get parse the event into the standard format when from another contract?
-      // expect(event.event).to.eq("Event");
+      it("getEvent from contract", async () => {
+        const event = await getEvent<MultipleEvent>(
+          tx,
+          mockEvent,
+          mockEvents.interface.events["Multiple(address,address,address,uint256,string,bytes)"]
+        );
+        expect(event.args.str).to.eq(str);
+      });
     });
   });
 });
