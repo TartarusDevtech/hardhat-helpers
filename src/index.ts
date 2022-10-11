@@ -1,4 +1,5 @@
 export * from "./balance";
+export * from "./create2";
 export * from "./events";
 export * from "./fork";
 export * as mainnet from "./mainnet";

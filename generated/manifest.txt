@@ -4,6 +4,10 @@ dist/balance.d.ts
 dist/balance.d.ts.map
 dist/balance.js
 dist/balance.js.map
+dist/create2.d.ts
+dist/create2.d.ts.map
+dist/create2.js
+dist/create2.js.map
 dist/events.d.ts
 dist/events.d.ts.map
 dist/events.js
@@ -86,6 +90,7 @@ dist/typechain/Weth.js
 dist/typechain/Weth.js.map
 package.json
 src/balance.ts
+src/create2.ts
 src/events.ts
 src/fork.ts
 src/gasStories.ts
