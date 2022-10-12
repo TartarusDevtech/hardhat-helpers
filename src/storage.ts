@@ -18,6 +18,12 @@ export async function getStorageNumber(contract: { address: string }, slot: stri
   return BigNumber.from(value);
 }
 
+export async function hasCode(contract: { address: string } | string): Promise<boolean> {
+  const address = typeof contract === "string" ? contract : contract.address;
+  const code = await ethers.provider.getCode(address);
+  return code !== "0x";
+}
+
 export async function setCodeFromContract(toContract: { address: string }, fromContract: { address: string }) {
   const code = await ethers.provider.getCode(fromContract.address);
   await setCodeTo(toContract, code);
