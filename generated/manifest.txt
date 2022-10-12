@@ -32,6 +32,10 @@ dist/mainnet/index.d.ts
 dist/mainnet/index.d.ts.map
 dist/mainnet/index.js
 dist/mainnet/index.js.map
+dist/mainnet/udsc.d.ts
+dist/mainnet/udsc.d.ts.map
+dist/mainnet/udsc.js
+dist/mainnet/udsc.js.map
 dist/mainnet/weth.d.ts
 dist/mainnet/weth.d.ts.map
 dist/mainnet/weth.js
@@ -76,6 +80,10 @@ dist/typechain/factories/index.d.ts
 dist/typechain/factories/index.d.ts.map
 dist/typechain/factories/index.js
 dist/typechain/factories/index.js.map
+dist/typechain/factories/Usdc__factory.d.ts
+dist/typechain/factories/Usdc__factory.d.ts.map
+dist/typechain/factories/Usdc__factory.js
+dist/typechain/factories/Usdc__factory.js.map
 dist/typechain/factories/Weth__factory.d.ts
 dist/typechain/factories/Weth__factory.d.ts.map
 dist/typechain/factories/Weth__factory.js
@@ -84,6 +92,10 @@ dist/typechain/index.d.ts
 dist/typechain/index.d.ts.map
 dist/typechain/index.js
 dist/typechain/index.js.map
+dist/typechain/Usdc.d.ts
+dist/typechain/Usdc.d.ts.map
+dist/typechain/Usdc.js
+dist/typechain/Usdc.js.map
 dist/typechain/Weth.d.ts
 dist/typechain/Weth.d.ts.map
 dist/typechain/Weth.js
@@ -97,6 +109,7 @@ src/gasStories.ts
 src/index.ts
 src/mainnet/dai.ts
 src/mainnet/index.ts
+src/mainnet/udsc.ts
 src/mainnet/weth.ts
 src/snapshotEach.ts
 src/storage.ts
@@ -108,6 +121,8 @@ src/typechain/common.ts
 src/typechain/Dai.ts
 src/typechain/factories/Dai__factory.ts
 src/typechain/factories/index.ts
+src/typechain/factories/Usdc__factory.ts
 src/typechain/factories/Weth__factory.ts
 src/typechain/index.ts
+src/typechain/Usdc.ts
 src/typechain/Weth.ts
