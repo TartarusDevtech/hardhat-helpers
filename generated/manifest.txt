@@ -100,6 +100,10 @@ dist/typechain/Weth.d.ts
 dist/typechain/Weth.d.ts.map
 dist/typechain/Weth.js
 dist/typechain/Weth.js.map
+dist/wallet.d.ts
+dist/wallet.d.ts.map
+dist/wallet.js
+dist/wallet.js.map
 package.json
 src/balance.ts
 src/create2.ts
@@ -126,3 +130,4 @@ src/typechain/factories/Weth__factory.ts
 src/typechain/index.ts
 src/typechain/Usdc.ts
 src/typechain/Weth.ts
+src/wallet.ts

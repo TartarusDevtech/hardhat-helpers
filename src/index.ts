@@ -9,3 +9,4 @@ export * from "./testBehaviors";
 export * from "./time";
 export * from "./tracer";
 export * from "./typechain";
+export * from "./wallet";
