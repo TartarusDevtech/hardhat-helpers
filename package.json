@@ -47,7 +47,7 @@
     "fs": "0.0.1-security",
     "hardhat": "2.12.1",
     "hardhat-gas-reporter": "1.0.9",
-    "hardhat-tracer": "1.1.0-rc.9",
+    "hardhat-tracer": "1.1.1",
     "mocha": "10.1.0",
     "prettier": "2.7.1",
     "prettier-plugin-solidity": "1.0.0-dev.23",
