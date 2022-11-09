@@ -28,14 +28,9 @@ contract MockEvents {
     emit String(value);
   }
 
-  function emitMultiple(
-    address from,
-    address to,
-    address origin,
-    uint256 value,
-    string memory str,
-    bytes memory data
-  ) public {
+  function emitMultiple(address from, address to, address origin, uint256 value, string memory str, bytes memory data)
+    public
+  {
     emit Multiple(from, to, origin, value, str, data);
   }
 }
