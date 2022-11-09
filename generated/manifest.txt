@@ -40,6 +40,10 @@ dist/mainnet/weth.d.ts
 dist/mainnet/weth.d.ts.map
 dist/mainnet/weth.js
 dist/mainnet/weth.js.map
+dist/math.d.ts
+dist/math.d.ts.map
+dist/math.js
+dist/math.js.map
 dist/snapshotEach.d.ts
 dist/snapshotEach.d.ts.map
 dist/snapshotEach.js
@@ -115,6 +119,7 @@ src/mainnet/dai.ts
 src/mainnet/index.ts
 src/mainnet/udsc.ts
 src/mainnet/weth.ts
+src/math.ts
 src/snapshotEach.ts
 src/storage.ts
 src/testBehaviors/index.ts
