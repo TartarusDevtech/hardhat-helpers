@@ -1,4 +1,4 @@
-import { BigNumber } from "ethers";
+import { BigNumber, providers } from "ethers";
 import { ethers } from "hardhat";
 
 export async function getStorage(contract: { address: string }, slot: string | number): Promise<string> {
@@ -24,8 +24,12 @@ export async function hasCode(contract: { address: string } | string): Promise<b
   return code !== "0x";
 }
 
-export async function setCodeFromContract(toContract: { address: string }, fromContract: { address: string }) {
-  const code = await ethers.provider.getCode(fromContract.address);
+export async function setCodeFromContract(
+  toContract: { address: string },
+  fromContract: { address: string },
+  fromProvider?: providers.Provider
+) {
+  const code = await (fromProvider ?? ethers.provider).getCode(fromContract.address);
   await setCodeTo(toContract, code);
 }
 
