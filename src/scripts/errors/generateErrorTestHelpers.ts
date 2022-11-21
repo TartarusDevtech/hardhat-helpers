@@ -8,7 +8,7 @@ export function generateErrorTestHelpers(
 import { BigNumberish, ContractTransaction } from "ethers";
 import { ethers } from "hardhat";
 
-import { ContractErrors, CustomContractError } from "${customErrorsImportPath}";
+import { ContractErrorsByName, CustomContractError } from "${customErrorsImportPath}";
 
 async function expectCustomError(tx: Promise<ContractTransaction>, error: CustomContractError, ...args: any[]) {
   const factory = await ethers.getContractFactory(error.contractName);
@@ -40,7 +40,7 @@ export const expectError = {
     file += `  ) {
     await expectCustomError(
       tx,
-      ContractErrors.${error.name},
+      ContractErrorsByName.${error.name},
 `;
     if (error.params) {
       for (const param of error.params) {

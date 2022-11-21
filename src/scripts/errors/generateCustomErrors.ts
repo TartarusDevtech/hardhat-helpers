@@ -6,7 +6,7 @@ type CustomErrorFileOptions = {
   keyBy: "errorName" | "errorCode";
 };
 
-export function generateCustomErrorsFile(contracts: ContractDefinition[], options: CustomErrorFileOptions): string {
+export function generateCustomErrorsFile(contracts: ContractDefinition[]): string {
   // Gather the custom errors from each input contract and de-dupe entries.
   const allCustomErrors: CustomContractError[] = [];
   for (const contract of contracts) {
@@ -35,10 +35,17 @@ export function generateCustomErrorsFile(contracts: ContractDefinition[], option
   }[];
 };
 
-export const ContractErrors: { [${options.keyBy}: string]: CustomContractError } = {
+export const ContractErrorsByName: { [errorName: string]: CustomContractError } = {
 `;
   for (const error of allCustomErrors) {
-    file += dumpError(error, options);
+    file += dumpError(error, { keyBy: "errorName" });
+  }
+  file += `};
+
+export const ContractErrorsBySignature: { [errorCode: string]: CustomContractError } = {
+`;
+  for (const error of allCustomErrors) {
+    file += dumpError(error, { keyBy: "errorCode" });
   }
   file += `};\n`;
   return file;

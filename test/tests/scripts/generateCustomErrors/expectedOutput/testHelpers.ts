@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { BigNumberish, ContractTransaction } from "ethers";
 import { ethers } from "hardhat";
 
-import { ContractErrors, CustomContractError } from "./ByName";
+import { ContractErrorsByName, CustomContractError } from "./customErrors";
 
 async function expectCustomError(tx: Promise<ContractTransaction>, error: CustomContractError, ...args: any[]) {
   const factory = await ethers.getContractFactory(error.contractName);
@@ -17,7 +17,7 @@ export const expectError = {
   ) {
     await expectCustomError(
       tx,
-      ContractErrors.CustomErrors_Test_1,
+      ContractErrorsByName.CustomErrors_Test_1,
     );
   },
   CustomErrors_Test_2: async function (
@@ -26,7 +26,7 @@ export const expectError = {
   ) {
     await expectCustomError(
       tx,
-      ContractErrors.CustomErrors_Test_2,
+      ContractErrorsByName.CustomErrors_Test_2,
       a,
     );
   },
@@ -37,7 +37,7 @@ export const expectError = {
   ) {
     await expectCustomError(
       tx,
-      ContractErrors.CustomErrors_Test_3,
+      ContractErrorsByName.CustomErrors_Test_3,
       a,
       b,
     );
@@ -50,7 +50,7 @@ export const expectError = {
   ) {
     await expectCustomError(
       tx,
-      ContractErrors.CustomErrors_Test_4,
+      ContractErrorsByName.CustomErrors_Test_4,
       a,
       b,
       c,

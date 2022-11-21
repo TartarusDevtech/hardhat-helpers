@@ -5,20 +5,11 @@ import { generateCustomErrorsFile } from "../../../../src/scripts";
 import { CustomErrors__factory, CustomErrors2__factory, CustomErrorsWithConflict__factory } from "../../../typechain";
 
 describe("scripts / generateCustomErrors / generateErrors", () => {
-  describe("Happy case", () => {
+  it("Generate errors file", async () => {
     const contracts = [CustomErrors__factory, CustomErrors2__factory];
-
-    it("By signature", async () => {
-      const results = generateCustomErrorsFile(contracts, { keyBy: "errorCode" });
-      const expected = readFileSync(`${__dirname}/expectedOutput/BySignature.ts`, "utf8");
-      expect(results).to.eq(expected);
-    });
-
-    it("By name", async () => {
-      const results = generateCustomErrorsFile(contracts, { keyBy: "errorName" });
-      const expected = readFileSync(`${__dirname}/expectedOutput/ByName.ts`, "utf8");
-      expect(results).to.eq(expected);
-    });
+    const results = generateCustomErrorsFile(contracts);
+    const expected = readFileSync(`${__dirname}/expectedOutput/customErrors.ts`, "utf8");
+    expect(results).to.eq(expected);
   });
 
   describe("Conflict", () => {
