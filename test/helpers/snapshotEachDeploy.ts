@@ -7,7 +7,6 @@ let deployCounter = 0;
 export let mock: MockValue;
 
 snapshotEach(async () => {
-  console.log(`Deploying MockValue#${deployCounter}`);
   const [deployer] = await ethers.getSigners();
   mock = await new MockValue__factory(deployer).deploy();
   if (++deployCounter != 1) {
