@@ -2,10 +2,9 @@ import "hardhat-tracer";
 
 import { tracer } from "hardhat";
 
-export async function registerTracerNames<T extends { [key: string]: { address: string } }>(
-  accounts: T,
-  prefix?: string
-) {
+import { AddressLike, toAddress } from "./types";
+
+export async function registerTracerNames<T extends { [key: string]: AddressLike }>(accounts: T, prefix?: string) {
   // Add name aliases to tracer (e.g. when using --logs)
   let accountName: keyof typeof accounts;
   for (accountName in accounts) {
@@ -14,6 +13,6 @@ export async function registerTracerNames<T extends { [key: string]: { address: 
     if (prefix) {
       name = prefix + name;
     }
-    tracer.nameTags[signer.address] = name;
+    tracer.nameTags[toAddress(signer)] = name;
   }
 }
