@@ -18,6 +18,10 @@ export async function getStorageNumber(contract: { address: string }, slot: stri
   return BigNumber.from(value);
 }
 
+export async function getCode(fromContract: { address: string }, fromProvider?: providers.Provider): Promise<string> {
+  return await (fromProvider ?? ethers.provider).getCode(fromContract.address);
+}
+
 export async function hasCode(contract: { address: string } | string): Promise<boolean> {
   const address = typeof contract === "string" ? contract : contract.address;
   const code = await ethers.provider.getCode(address);
@@ -29,7 +33,7 @@ export async function setCodeFromContract(
   fromContract: { address: string },
   fromProvider?: providers.Provider
 ) {
-  const code = await (fromProvider ?? ethers.provider).getCode(fromContract.address);
+  const code = await getCode(fromContract, fromProvider);
   await setCodeTo(toContract, code);
 }
 
