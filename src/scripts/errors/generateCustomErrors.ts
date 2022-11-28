@@ -35,14 +35,14 @@ export function generateCustomErrorsFile(contracts: ContractDefinition[]): strin
   }[];
 };
 
-export const ContractErrorsByName: { [errorName: string]: CustomContractError } = {
+export const ContractErrorsByName = {
 `;
   for (const error of allCustomErrors) {
     file += dumpError(error, { keyBy: "errorName" });
   }
   file += `};
 
-export const ContractErrorsBySignature: { [errorCode: string]: CustomContractError } = {
+export const ContractErrorsBySignature = {
 `;
   for (const error of allCustomErrors) {
     file += dumpError(error, { keyBy: "errorCode" });

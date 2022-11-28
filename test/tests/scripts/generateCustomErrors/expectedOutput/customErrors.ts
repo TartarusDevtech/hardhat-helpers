@@ -9,7 +9,7 @@ export type CustomContractError = {
   }[];
 };
 
-export const ContractErrorsByName: { [errorName: string]: CustomContractError } = {
+export const ContractErrorsByName = {
   CustomErrors_Test_1: {
     contractName: "CustomErrors",
     name: "CustomErrors_Test_1",
@@ -44,7 +44,7 @@ export const ContractErrorsByName: { [errorName: string]: CustomContractError } 
   },
 };
 
-export const ContractErrorsBySignature: { [errorCode: string]: CustomContractError } = {
+export const ContractErrorsBySignature = {
   0x730b17c8: {
     contractName: "CustomErrors",
     name: "CustomErrors_Test_1",
