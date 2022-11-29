@@ -5,11 +5,18 @@ export const ONE_MINUTE = 60;
 export const ONE_HOUR = ONE_MINUTE * 60;
 export const ONE_DAY = ONE_HOUR * 24;
 
-export async function increaseTime(seconds: BigNumberish): Promise<void> {
+/**
+ * @param seconds How many seconds from now the timestamp should be set to.
+ * @param shouldAdvanceBlock True if a block should be mined, effecting the next read call.
+ * False to use this value as the timestamp for the next write call.
+ * @returns The new timestamp.
+ */
+export async function increaseTime(seconds: BigNumberish, shouldAdvanceBlock = true): Promise<number> {
   const secondsNumber = BigNumber.from(seconds).toNumber();
-  const provider: providers.JsonRpcProvider = ethers.provider;
-  await provider.send("evm_increaseTime", [secondsNumber]);
-  await advanceBlock();
+  const now = await getBlockTime();
+  const targetTime = now + secondsNumber;
+  await increaseTimeTo(targetTime, shouldAdvanceBlock);
+  return targetTime;
 }
 
 export async function increaseTimeTo(timestamp: BigNumberish, shouldAdvanceBlock = true): Promise<void> {
