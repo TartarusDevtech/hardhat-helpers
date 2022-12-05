@@ -1,0 +1,41 @@
+pull_request_rules:
+  - name: me
+    conditions:
+      - author=HardlyDifficult
+      - "#status-failure=0"
+      - "#label=0"
+    actions:
+      label:
+        add: ["auto-merge"]
+
+  - name: dependabot
+    conditions:
+      - author=dependabot[bot]
+      - "#status-failure=0"
+      - "#label=0"
+    actions:
+      label:
+        add: ["auto-merge"]
+
+  - name: imgbot
+    conditions:
+      - author=imgbot[bot]
+      - "#status-failure=0"
+      - "#label=0"
+    actions:
+      label:
+        add: ["auto-merge"]
+
+  - name: auto-merge
+    conditions:
+      - label=auto-merge
+      - "status-success=ci/circleci: build"
+      - "#changes-requested-reviews-by=0"
+      - "#status-neutral=0"
+      - "#status-failure=0"
+      - "#assignee=0"
+      - -conflict
+    actions:
+      merge:
+        method: squash
+      delete_head_branch: {}
