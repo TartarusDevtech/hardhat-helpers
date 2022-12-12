@@ -12,7 +12,7 @@ pull_request_rules:
     conditions:
       - author=dependabot[bot]
       - "#status-failure=0"
-      - "#label=0"
+      - "#label=1"
     actions:
       label:
         add: ["auto-merge"]
