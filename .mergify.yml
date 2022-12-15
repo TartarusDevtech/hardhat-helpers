@@ -1,13 +1,4 @@
 pull_request_rules:
-  - name: me
-    conditions:
-      - author=HardlyDifficult
-      - "#status-failure=0"
-      - "#label=0"
-    actions:
-      label:
-        add: ["auto-merge"]
-
   - name: dependabot
     conditions:
       - author=dependabot[bot]
