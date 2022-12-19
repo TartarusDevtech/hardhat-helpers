@@ -4193,10 +4193,10 @@ prelude-ls@~1.1.2:
   resolved "https://registry.yarnpkg.com/prelude-ls/-/prelude-ls-1.1.2.tgz#21932a549f5e52ffd9a827f570e04be62a97da54"
   integrity sha512-ESF23V4SKG6lVSGZgYNpbsiaAkdab6ZgOxe52p7+Kid3W3u3bxR4Vfd/o21dmN7jSt0IwgZ4v5MUd26FEtXE9w==
 
-prettier-plugin-solidity@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/prettier-plugin-solidity/-/prettier-plugin-solidity-1.0.0.tgz#5b23f48cc9c28a1246c6dd89af117234b813f48b"
-  integrity sha512-gRJCeZ7imbWtNYN2SudjJoPmka5r6jcd2cSTV6FC3pVCtY6LFZbeQQjpKufUEp88hXBAAnkOTOh7TA5xwj9M3A==
+prettier-plugin-solidity@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/prettier-plugin-solidity/-/prettier-plugin-solidity-1.1.0.tgz#a417d104b48a43af3adbfb96b65dbce34fd21429"
+  integrity sha512-5gq0T49ifvXH/6x1STuKyWjTUgi6ICoV65yNtKlg/vZEvocFtSpByJOJICBfqPwNsnv4vhhWIqkLGSUJmWum2w==
   dependencies:
     "@solidity-parser/parser" "^0.14.5"
     emoji-regex "^10.2.1"
