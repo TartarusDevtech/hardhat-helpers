@@ -68,7 +68,7 @@ function loadCustomErrors(contract: ContractDefinition): CustomContractError[] {
 }
 
 function dumpError(error: CustomContractError, options: CustomErrorFileOptions): string {
-  let results = `  ${options.keyBy === "errorName" ? error.name : error.errorCode}: {
+  let results = `  ${options.keyBy === "errorName" ? error.name : `"${error.errorCode}"`}: {
     contractName: "${error.contractName}",
     name: "${error.name}",
     errorCode: "${error.errorCode}",

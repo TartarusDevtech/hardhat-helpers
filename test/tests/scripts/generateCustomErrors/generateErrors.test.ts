@@ -15,9 +15,7 @@ describe("scripts / generateCustomErrors / generateErrors", () => {
   describe("Conflict", () => {
     it("Throws", async () => {
       const contracts = [CustomErrors__factory, CustomErrorsWithConflict__factory];
-      expect(() => generateCustomErrorsFile(contracts, { keyBy: "errorName" })).to.throw(
-        "Duplicate error name: CustomErrors_Test_3"
-      );
+      expect(() => generateCustomErrorsFile(contracts)).to.throw("Duplicate error name: CustomErrors_Test_3");
     });
   });
 });

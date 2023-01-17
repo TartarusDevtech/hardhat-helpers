@@ -45,12 +45,12 @@ export const ContractErrorsByName = {
 };
 
 export const ContractErrorsBySignature = {
-  0x730b17c8: {
+  "0x730b17c8": {
     contractName: "CustomErrors",
     name: "CustomErrors_Test_1",
     errorCode: "0x730b17c8",
   },
-  0x11b1f88a: {
+  "0x11b1f88a": {
     contractName: "CustomErrors",
     name: "CustomErrors_Test_2",
     errorCode: "0x11b1f88a",
@@ -58,7 +58,7 @@ export const ContractErrorsBySignature = {
       { name: "a", type: "uint256" },
     ],
   },
-  0xd3c4fb90: {
+  "0xd3c4fb90": {
     contractName: "CustomErrors",
     name: "CustomErrors_Test_3",
     errorCode: "0xd3c4fb90",
@@ -67,7 +67,7 @@ export const ContractErrorsBySignature = {
       { name: "b", type: "uint256" },
     ],
   },
-  0xa2e67f32: {
+  "0xa2e67f32": {
     contractName: "CustomErrors2",
     name: "CustomErrors_Test_4",
     errorCode: "0xa2e67f32",
