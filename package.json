@@ -42,7 +42,7 @@
     "@typescript-eslint/parser": "5.48.2",
     "chai": "4.3.7",
     "eslint-plugin-no-only-tests": "3.1.0",
-    "eslint-plugin-simple-import-sort": "8.0.0",
+    "eslint-plugin-simple-import-sort": "9.0.0",
     "ethers": "5.7.2",
     "fs": "0.0.1-security",
     "hardhat": "2.12.6",
