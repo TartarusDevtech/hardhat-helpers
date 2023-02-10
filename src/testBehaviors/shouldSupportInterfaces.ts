@@ -6,6 +6,8 @@ import { ethers } from "hardhat";
 
 export const INTERFACES: { [key: string]: string[] } = {};
 
+export const CustomInterfaces: { [interfaceName: string]: string } = {};
+
 // 165: Standard Interface Detection
 register165Interface("ERC165", ["supportsInterface(bytes4)"], "0x01ffc9a7");
 
@@ -59,6 +61,13 @@ register165Interface("ERC1155Metadata_URI", ["uri(uint256)"], "0x0e89341c");
 // 2981: NFT Royalty Standard
 register165Interface("ERC2981", ["royaltyInfo(uint256,uint256)"], "0x2a55205a");
 
+// 4906: EIP-721 Metadata Update Extension
+register165InterfaceNotDerivedFromHash(
+  "ERC4906",
+  // This EIP uses a the EIP number for the interfaceId since it only includes events
+  "0x49064906"
+);
+
 // 4907: Rental NFT, an Extension of EIP-721
 register165Interface(
   "ERC4907",
@@ -110,7 +119,20 @@ export function register165Interface(interfaceName: string, functions: string[],
   INTERFACES[interfaceName] = functions;
 }
 
+export function register165InterfaceNotDerivedFromHash(interfaceName: string, interfaceId: string): void {
+  if (CustomInterfaces[interfaceName]) {
+    expect(CustomInterfaces[interfaceName]).to.eq(
+      interfaceId,
+      `Interface ${interfaceName} already registered with interface ID ${CustomInterfaces[interfaceName]}}`
+    );
+  }
+  CustomInterfaces[interfaceName] = interfaceId;
+}
+
 export function get165InterfaceId(interfaceName: string): string {
+  if (CustomInterfaces[interfaceName]) {
+    return CustomInterfaces[interfaceName];
+  }
   const functions = INTERFACES[interfaceName];
   if (!functions) {
     throw new Error(`Interface ${interfaceName} not registered`);
@@ -123,9 +145,16 @@ export async function shouldSupport165Interfaces(
   interfaces: string | string[],
   supportedButNotRegistered = false
 ): Promise<void> {
-  const INTERFACE_IDS: { [key: string]: string } = {};
-  for (const k of Object.getOwnPropertyNames(INTERFACES)) {
-    INTERFACE_IDS[k] = makeInterfaceId(INTERFACES[k]);
+  const INTERFACE_IDS: { [interfaceName: string]: string } = {};
+  for (const interfaceName of Object.getOwnPropertyNames(CustomInterfaces)) {
+    INTERFACE_IDS[interfaceName] = CustomInterfaces[interfaceName];
+  }
+  for (const interfaceName of Object.getOwnPropertyNames(INTERFACES)) {
+    const interfaceId = makeInterfaceId(INTERFACES[interfaceName]);
+    if (Object.values(INTERFACE_IDS).includes(interfaceId)) {
+      throw new Error(`Interface ${interfaceName} has the same interface ID as another interface`);
+    }
+    INTERFACE_IDS[interfaceName] = interfaceId;
   }
 
   if (typeof interfaces === "string") {
@@ -153,11 +182,13 @@ export async function shouldSupport165Interfaces(
         ` for "${interfaceName}" (${interfaceId})`
     );
 
-    for (const fnName of INTERFACES[interfaceName]) {
-      expect(contract.functions[fnName]).not.to.eq(
-        null,
-        `${fnName} has to be implemented for ${interfaceName} (${interfaceId})`
-      );
+    if (!Object.values(CustomInterfaces).includes(interfaceId)) {
+      for (const fnName of INTERFACES[interfaceName]) {
+        expect(contract.functions[fnName]).not.to.eq(
+          null,
+          `${fnName} has to be implemented for ${interfaceName} (${interfaceId})`
+        );
+      }
     }
   }
 }

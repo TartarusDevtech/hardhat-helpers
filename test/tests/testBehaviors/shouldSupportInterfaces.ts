@@ -2,14 +2,16 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 
 import { get165InterfaceId, INTERFACES, shouldSupport165Interfaces, snapshotEach } from "../../../src";
-import { BasicERC721, BasicERC721__factory } from "../../typechain";
+import { BasicERC721, BasicERC721__factory, MockERC4906, MockERC4906__factory } from "../../typechain";
 
 describe("testBehaviors / shouldSupportInterfaces", () => {
   let erc721: BasicERC721;
+  let mockERC4906: MockERC4906;
 
   snapshotEach(async () => {
     const [deployer] = await ethers.getSigners();
     erc721 = await new BasicERC721__factory(deployer).deploy();
+    mockERC4906 = await new MockERC4906__factory(deployer).deploy();
   });
 
   it("Check interface", async () => {
@@ -36,7 +38,11 @@ describe("testBehaviors / shouldSupportInterfaces", () => {
   });
 
   it("Can get interfaceId", async () => {
-    const interfaceId = await get165InterfaceId("ERC721");
+    const interfaceId = get165InterfaceId("ERC721");
     expect(interfaceId).to.eq("0x80ac58cd");
+  });
+
+  it("Custom 4906 interface is registered", async () => {
+    await shouldSupport165Interfaces(mockERC4906, "ERC4906");
   });
 });
