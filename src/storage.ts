@@ -1,4 +1,4 @@
-import { BigNumber, providers } from "ethers";
+import { BigNumber, BigNumberish, providers } from "ethers";
 import { ethers } from "hardhat";
 
 import { AddressLike, toAddress } from "./types";
@@ -50,6 +50,23 @@ export async function setStorage(contract: AddressLike, slot: string | number, v
   }
   value = ethers.utils.hexZeroPad(value, 32);
   await ethers.provider.send("hardhat_setStorageAt", [toAddress(contract), slot, value]);
+}
+
+export async function setStoragePackedUint32(
+  contract: AddressLike,
+  slot: string | number,
+  offsetInBytes: number,
+  value: BigNumberish
+) {
+  let storage = await getStorage(contract, slot);
+  const newValue = ethers.utils.hexZeroPad(ethers.utils.hexValue(value), 4).substring(2);
+
+  // Variables are packed lower order aligned, flipping the offset
+  offsetInBytes = 32 - offsetInBytes - newValue.length / 2;
+  // Update existing storage at offset
+  storage =
+    storage.substring(0, offsetInBytes * 2 + 2) + newValue + storage.substring(offsetInBytes * 2 + newValue.length + 2);
+  await setStorage(contract, slot, storage);
 }
 
 function getSlot(slot: string | number, pad = false): string {
