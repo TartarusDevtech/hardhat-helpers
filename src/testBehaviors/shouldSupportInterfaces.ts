@@ -145,22 +145,8 @@ export async function shouldSupport165Interfaces(
   interfaces: string | string[],
   supportedButNotRegistered = false
 ): Promise<void> {
-  const INTERFACE_IDS: { [interfaceName: string]: string } = {};
-  for (const interfaceName of Object.getOwnPropertyNames(CustomInterfaces)) {
-    INTERFACE_IDS[interfaceName] = CustomInterfaces[interfaceName];
-  }
-  for (const interfaceName of Object.getOwnPropertyNames(INTERFACES)) {
-    const interfaceId = makeInterfaceId(INTERFACES[interfaceName]);
-    if (Object.values(INTERFACE_IDS).includes(interfaceId)) {
-      throw new Error(`Interface ${interfaceName} has the same interface ID as another interface`);
-    }
-    INTERFACE_IDS[interfaceName] = interfaceId;
-  }
-
-  if (typeof interfaces === "string") {
-    // If checking a single interface, wrap it in an array
-    interfaces = [interfaces];
-  }
+  let INTERFACE_IDS: { [interfaceName: string]: string } | undefined;
+  ({ INTERFACE_IDS, interfaces } = getInterfaceNames(interfaces));
 
   if (!interfaces.includes("ERC165") && !supportedButNotRegistered) {
     // ERC165 is always required
@@ -191,6 +177,43 @@ export async function shouldSupport165Interfaces(
       }
     }
   }
+}
+
+/**
+ * Confirms that the given contract does not declare support for the interfaces provided.
+ */
+export async function shouldNotSupport165Interfaces(contract: Contract, interfaces: string | string[]) {
+  let INTERFACE_IDS: { [interfaceName: string]: string } | undefined;
+  ({ INTERFACE_IDS, interfaces } = getInterfaceNames(interfaces));
+
+  for (const interfaceName of interfaces) {
+    const interfaceId = INTERFACE_IDS[interfaceName];
+    if (!interfaceId) {
+      throw new Error(`Unknown interface "${interfaceName}"`);
+    }
+
+    expect(await contract.supportsInterface(interfaceId)).to.be.false;
+  }
+}
+
+function getInterfaceNames(interfaces: string | string[]) {
+  const INTERFACE_IDS: { [interfaceName: string]: string } = {};
+  for (const interfaceName of Object.getOwnPropertyNames(CustomInterfaces)) {
+    INTERFACE_IDS[interfaceName] = CustomInterfaces[interfaceName];
+  }
+  for (const interfaceName of Object.getOwnPropertyNames(INTERFACES)) {
+    const interfaceId = makeInterfaceId(INTERFACES[interfaceName]);
+    if (Object.values(INTERFACE_IDS).includes(interfaceId)) {
+      throw new Error(`Interface ${interfaceName} has the same interface ID as another interface`);
+    }
+    INTERFACE_IDS[interfaceName] = interfaceId;
+  }
+
+  if (typeof interfaces === "string") {
+    // If checking a single interface, wrap it in an array
+    interfaces = [interfaces];
+  }
+  return { INTERFACE_IDS, interfaces };
 }
 
 function makeInterfaceId(functionSignatures: string[]): string {

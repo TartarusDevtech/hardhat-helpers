@@ -1,7 +1,13 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
 
-import { get165InterfaceId, INTERFACES, shouldSupport165Interfaces, snapshotEach } from "../../../src";
+import {
+  get165InterfaceId,
+  INTERFACES,
+  shouldNotSupport165Interfaces,
+  shouldSupport165Interfaces,
+  snapshotEach,
+} from "../../../src";
 import { BasicERC721, BasicERC721__factory, MockERC4906, MockERC4906__factory } from "../../typechain";
 
 describe("testBehaviors / shouldSupportInterfaces", () => {
@@ -20,6 +26,14 @@ describe("testBehaviors / shouldSupportInterfaces", () => {
 
   it("Check multiple interfaces", async () => {
     await shouldSupport165Interfaces(erc721, ["ERC165", "ERC721"]);
+  });
+
+  it("Check for a missing interface", async () => {
+    await shouldNotSupport165Interfaces(erc721, "ERC4907");
+  });
+
+  it("Check for multiple missing interfaces", async () => {
+    await shouldNotSupport165Interfaces(erc721, ["ERC4907", "ERC5006"]);
   });
 
   it("Throws if the interface is unknown", async () => {
@@ -44,5 +58,9 @@ describe("testBehaviors / shouldSupportInterfaces", () => {
 
   it("Custom 4906 interface is registered", async () => {
     await shouldSupport165Interfaces(mockERC4906, "ERC4906");
+  });
+
+  it("Throws if an unexpected interface is supported", async () => {
+    await expect(shouldNotSupport165Interfaces(erc721, "ERC721")).to.be.rejectedWith("expected true to be false");
   });
 });
