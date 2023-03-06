@@ -10,6 +10,7 @@
     ],
     "reason-string": ["error", { "maxLength": 64 }],
     "max-line-length": ["error", 120],
+    "no-global-import": "off",
     "not-rely-on-time": "off",
     "var-name-mixedcase": "off"
   }
