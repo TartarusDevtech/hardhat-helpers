@@ -21,7 +21,7 @@
     "@typechain/hardhat": "6.1.6",
     "@types/chai": "4.3.5",
     "@types/mocha": "10.0.1",
-    "@typescript-eslint/eslint-plugin": "5.59.11",
+    "@typescript-eslint/eslint-plugin": "5.60.0",
     "@typescript-eslint/parser": "5.60.0",
     "chai": "4.3.7",
     "eslint": "8.43.0",
