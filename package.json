@@ -58,7 +58,7 @@
     "solidity-coverage": "0.8.4",
     "ts-node": "10.9.1",
     "tsc": "2.0.4",
-    "typechain": "8.2.0",
+    "typechain": "8.3.0",
     "typescript": "5.1.6"
   },
   "peerDependencies": {
