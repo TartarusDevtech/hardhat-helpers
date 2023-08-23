@@ -10,7 +10,7 @@ contract CustomErrors2 {
   // New entry
   error CustomErrors_Test_4(uint256 a, uint256 b, uint256 c);
 
-  function error(uint test) public pure {
+  function error(uint256 test) public pure {
     if (test == 0) {
       revert CustomErrors_Test_1();
     } else if (test == 1) {

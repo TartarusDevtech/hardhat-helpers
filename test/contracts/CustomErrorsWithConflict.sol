@@ -6,7 +6,7 @@ contract CustomErrorsWithConflict {
   // Conflict: same name as in `CustomErrors` but w/ diff params
   error CustomErrors_Test_3(uint256 a);
 
-  function error(uint test) public pure {
+  function error(uint256 test) public pure {
     if (test == 2) {
       revert CustomErrors_Test_3(1);
     }

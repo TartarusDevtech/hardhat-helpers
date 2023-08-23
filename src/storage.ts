@@ -58,14 +58,34 @@ export async function setStoragePackedUint32(
   offsetInBytes: number,
   value: BigNumberish
 ) {
+  await setStoragePackedValue(contract, slot, offsetInBytes, value, 4);
+}
+
+export async function setStoragePackedBool(
+  contract: AddressLike,
+  slot: string | number,
+  offsetInBytes: number,
+  value: boolean
+) {
+  const numberValue = value ? 1 : 0;
+  await setStoragePackedValue(contract, slot, offsetInBytes, numberValue, 1);
+}
+
+async function setStoragePackedValue(
+  contract: AddressLike,
+  slot: string | number,
+  offsetInBytes: number,
+  newValue: BigNumberish,
+  numberOfBytes: number
+) {
+  const hexValue = ethers.utils.hexZeroPad(ethers.utils.hexValue(newValue), numberOfBytes).substring(2);
   let storage = await getStorage(contract, slot);
-  const newValue = ethers.utils.hexZeroPad(ethers.utils.hexValue(value), 4).substring(2);
 
   // Variables are packed lower order aligned, flipping the offset
-  offsetInBytes = 32 - offsetInBytes - newValue.length / 2;
+  offsetInBytes = 32 - offsetInBytes - hexValue.length / 2;
   // Update existing storage at offset
   storage =
-    storage.substring(0, offsetInBytes * 2 + 2) + newValue + storage.substring(offsetInBytes * 2 + newValue.length + 2);
+    storage.substring(0, offsetInBytes * 2 + 2) + hexValue + storage.substring(offsetInBytes * 2 + hexValue.length + 2);
   await setStorage(contract, slot, storage);
 }
 

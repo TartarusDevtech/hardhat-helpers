@@ -7,9 +7,9 @@ contract CustomErrors {
   error CustomErrors_Test_2(uint256 a);
   error CustomErrors_Test_3(uint256 a, uint256 b);
 
-  uint private counter;
+  uint256 private counter;
 
-  function error(uint test) public {
+  function error(uint256 test) public {
     if (test == 0) {
       revert CustomErrors_Test_1();
     } else if (test == 1) {
