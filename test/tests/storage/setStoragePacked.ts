@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { BigNumber, BigNumberish } from "ethers";
 import { ethers } from "hardhat";
 
-import { getRandomAddress, setStoragePackedUint32, snapshotEach } from "../../../src";
+import { getRandomAddress, getStoragePackedUint32, setStoragePackedUint32, snapshotEach } from "../../../src";
 import { MockPackedStorage, MockPackedStorage__factory } from "../../typechain";
 
 describe("storage / setStoragePacked", () => {
@@ -40,6 +40,11 @@ describe("storage / setStoragePacked", () => {
 
     it("Has correct u64", async () => {
       expect(await mock.u64()).to.eq(previousU64);
+    });
+
+    it("Can read u32 from storage", async () => {
+      const value = await getStoragePackedUint32(mock, 0, 20);
+      expect(value).to.eq(expectedU32);
     });
   }
 });

@@ -20,6 +20,36 @@ export async function getStorageNumber(contract: AddressLike, slot: string | num
   return BigNumber.from(value);
 }
 
+async function getStoragePackedNumber(
+  contract: AddressLike,
+  slot: string | number,
+  offsetInBytes: number,
+  numberOfBytes: number
+): Promise<BigNumber> {
+  offsetInBytes = 32 - offsetInBytes - numberOfBytes;
+  const slotHex = await getStorage(contract, slot);
+  const valueHex = "0x" + slotHex.substring(offsetInBytes * 2 + 2, offsetInBytes * 2 + numberOfBytes * 2 + 2);
+  return BigNumber.from(valueHex);
+}
+
+export async function getStoragePackedUint32(
+  contract: AddressLike,
+  slot: string | number,
+  offsetInBytes: number
+): Promise<BigNumber> {
+  const value = await getStoragePackedNumber(contract, slot, offsetInBytes, 4);
+  return value;
+}
+
+export async function getStoragePackedBool(
+  contract: AddressLike,
+  slot: string | number,
+  offsetInBytes: number
+): Promise<boolean> {
+  const value = await getStoragePackedNumber(contract, slot, offsetInBytes, 1);
+  return value.eq(1);
+}
+
 export async function getCode(fromContract: AddressLike, fromProvider?: providers.Provider): Promise<string> {
   return await (fromProvider ?? ethers.provider).getCode(toAddress(fromContract));
 }
