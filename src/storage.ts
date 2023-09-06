@@ -46,8 +46,16 @@ export async function getStoragePackedBool(
   slot: string | number,
   offsetInBytes: number
 ): Promise<boolean> {
-  const value = await getStoragePackedNumber(contract, slot, offsetInBytes, 1);
+  const value = await getStoragePackedUint8(contract, slot, offsetInBytes);
   return value.eq(1);
+}
+export async function getStoragePackedUint8(
+  contract: AddressLike,
+  slot: string | number,
+  offsetInBytes: number
+): Promise<BigNumber> {
+  const value = await getStoragePackedNumber(contract, slot, offsetInBytes, 1);
+  return value;
 }
 
 export async function getCode(fromContract: AddressLike, fromProvider?: providers.Provider): Promise<string> {
@@ -98,7 +106,16 @@ export async function setStoragePackedBool(
   value: boolean
 ) {
   const numberValue = value ? 1 : 0;
-  await setStoragePackedValue(contract, slot, offsetInBytes, numberValue, 1);
+  await setStoragePackedUint8(contract, slot, offsetInBytes, numberValue);
+}
+
+export async function setStoragePackedUint8(
+  contract: AddressLike,
+  slot: string | number,
+  offsetInBytes: number,
+  value: BigNumberish
+) {
+  await setStoragePackedValue(contract, slot, offsetInBytes, value, 1);
 }
 
 async function setStoragePackedValue(
