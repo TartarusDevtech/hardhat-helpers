@@ -30,17 +30,19 @@ const records: GasRecord = {};
 let resultsLog = "";
 
 export async function gasStory(
-  tx: ContractTransaction | ContractTransaction[],
+  txOrGasUsed: ContractTransaction | ContractTransaction[] | number,
   ...categories: string[]
-): Promise<void> {
+): Promise<number> {
   let gasUsed = BigNumber.from(0);
-  if (Array.isArray(tx)) {
-    for (const t of tx) {
+  if (Array.isArray(txOrGasUsed)) {
+    for (const t of txOrGasUsed) {
       const receipt = await provider.getTransactionReceipt(t.hash);
       gasUsed = gasUsed.add(receipt.gasUsed);
     }
+  } else if (typeof txOrGasUsed === "number") {
+    gasUsed = BigNumber.from(txOrGasUsed);
   } else {
-    const receipt = await provider.getTransactionReceipt(tx.hash);
+    const receipt = await provider.getTransactionReceipt(txOrGasUsed.hash);
     gasUsed = receipt.gasUsed;
   }
 
@@ -59,6 +61,8 @@ export async function gasStory(
     throw new Error(`Entry for ${categories[categories.length - 1]} has already been populated.`);
   }
   record[categories[categories.length - 1]] = gasUsed;
+
+  return gasUsed.toNumber();
 }
 
 after(async () => {
