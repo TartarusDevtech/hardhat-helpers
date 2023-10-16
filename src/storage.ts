@@ -71,10 +71,23 @@ export async function hasCode(contract: AddressLike | string): Promise<boolean> 
 export async function setCodeFromContract(
   toContract: AddressLike,
   fromContract: AddressLike,
-  fromProvider?: providers.Provider
+  fromProvider?: providers.Provider,
+  include1967Proxy?: boolean
 ) {
   const code = await getCode(fromContract, fromProvider);
   await setCodeTo(toContract, code);
+
+  if (include1967Proxy) {
+    // from https://eips.ethereum.org/EIPS/eip-1967
+    const proxyAddress = await getStorageAddress(
+      fromContract,
+      "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc"
+    );
+    if (proxyAddress != ethers.constants.AddressZero) {
+      const proxyCode = await getCode(proxyAddress, fromProvider);
+      await setCodeTo(proxyAddress, proxyCode);
+    }
+  }
 }
 
 export async function setCodeTo(contract: AddressLike, code: string) {
