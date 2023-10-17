@@ -1,6 +1,6 @@
 {
   "name": "hardhat-helpers",
-  "version": "0.1.58",
+  "version": "0.1.59",
   "description": "Test helpers for Hardhat.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -14,7 +14,7 @@
     "lint:prettier": "prettier --write \"**/*.{json,md,sol,yml,ts}\"",
     "lint:eslint": "eslint --fix --config ./.eslintrc.yaml --ignore-path ./.eslintignore --ext .ts .",
     "manifest": "npm pack --dry-run --json | ts-node scripts/writeManifest.ts",
-    "prepPublish": "rm -rf ./dist && yarn && yarn lint && yarn build && cd test && yarn && yarn build && yarn test && yarn testScript && cd .. && yarn manifest",
+    "prepPublish": "rm -rf ./dist && yarn && yarn build && cd test && yarn && yarn build && yarn test && yarn testScript && cd .. && yarn manifest",
     "typechain": "typechain --target ethers-v5 --out-dir ./src/typechain ./abis/**/*.json"
   },
   "repository": {
