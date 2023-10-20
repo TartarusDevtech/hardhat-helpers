@@ -3,13 +3,13 @@ import { ethers } from "hardhat";
 
 import { AddressLike, toAddress } from "./types";
 
-export async function getStorage(contract: AddressLike, slot: string | number): Promise<string> {
+export async function getStorage(contract: AddressLike, slot: string | number, fromProvider?: providers.JsonRpcProvider): Promise<string> {
   slot = getSlot(slot, true);
-  return await ethers.provider.send("eth_getStorageAt", [toAddress(contract), slot]);
+  return await (fromProvider ?? ethers.provider).send("eth_getStorageAt", [toAddress(contract), slot]);
 }
 
-export async function getStorageAddress(contract: AddressLike, slot: string | number): Promise<string> {
-  let value = await getStorage(contract, slot);
+export async function getStorageAddress(contract: AddressLike, slot: string | number, fromProvider?: providers.JsonRpcProvider): Promise<string> {
+  let value = await getStorage(contract, slot, fromProvider);
   value = ethers.utils.hexStripZeros(value);
   value = ethers.utils.hexZeroPad(value, 20);
   return ethers.utils.getAddress(value);
@@ -71,7 +71,7 @@ export async function hasCode(contract: AddressLike | string): Promise<boolean> 
 export async function setCodeFromContract(
   toContract: AddressLike,
   fromContract: AddressLike,
-  fromProvider?: providers.Provider,
+  fromProvider?: providers.JsonRpcProvider,
   include1967Proxy?: boolean
 ) {
   const code = await getCode(fromContract, fromProvider);
@@ -79,13 +79,16 @@ export async function setCodeFromContract(
 
   if (include1967Proxy) {
     // from https://eips.ethereum.org/EIPS/eip-1967
+    const implementationStorageSlot = "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc";
     const proxyAddress = await getStorageAddress(
       fromContract,
-      "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc"
+      implementationStorageSlot,
+      fromProvider
     );
     if (proxyAddress != ethers.constants.AddressZero) {
       const proxyCode = await getCode(proxyAddress, fromProvider);
       await setCodeTo(proxyAddress, proxyCode);
+      await setStorage(toContract, implementationStorageSlot, proxyAddress);
     }
   }
 }

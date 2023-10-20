@@ -11,6 +11,9 @@ export const CustomInterfaces: { [interfaceName: string]: string } = {};
 // 165: Standard Interface Detection
 register165Interface("ERC165", ["supportsInterface(bytes4)"], "0x01ffc9a7");
 
+// 173: Contract Ownership Standard
+register165Interface("ERC173", ["owner()", "transferOwnership(address)"], "0x7f5828d0");
+
 // 721: Non-Fungible Token Standard
 register165Interface(
   "ERC721",
