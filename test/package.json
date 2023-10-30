@@ -30,7 +30,7 @@
     "ethers": "5.7.2",
     "hardhat": "2.18.3",
     "hardhat-gas-reporter": "1.0.9",
-    "hardhat-tracer": "2.6.0",
+    "hardhat-tracer": "2.7.0",
     "mocha": "10.2.0",
     "prettier": "3.0.3",
     "prettier-plugin-solidity": "1.1.3",
