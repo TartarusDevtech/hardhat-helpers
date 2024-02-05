@@ -49,7 +49,7 @@
     "ethers": "5.7.2",
     "fs": "0.0.1-security",
     "hardhat": "2.19.5",
-    "hardhat-gas-reporter": "1.0.9",
+    "hardhat-gas-reporter": "1.0.10",
     "hardhat-tracer": "2.7.0",
     "mocha": "10.2.0",
     "prettier": "3.2.5",
