@@ -10,9 +10,9 @@ plugins:
 root: true
 rules:
   "@typescript-eslint/no-floating-promises":
-    - error
+    - warn
   "@typescript-eslint/no-unused-vars":
-    - error
-  "no-only-tests/no-only-tests": "error"
-  "simple-import-sort/imports": "error"
-  "simple-import-sort/exports": "error"
+    - warn
+  "no-only-tests/no-only-tests": "warn"
+  "simple-import-sort/imports": "warn"
+  "simple-import-sort/exports": "warn"

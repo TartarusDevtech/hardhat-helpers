@@ -3,10 +3,12 @@ export type CustomContractError = {
   contractName: string;
   name: string;
   errorCode: string;
-  params?: {
+  params?: readonly {
     name: string;
     type: string;
   }[];
+  reason?: string;
+  description?: string;
 };
 
 export type ContractDefinition = { abi: any; name: string };

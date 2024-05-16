@@ -3,6 +3,10 @@
 pragma solidity ^0.8.12;
 
 contract CustomErrors {
+  /**
+   * @notice Test custom error 1
+   * @dev This is a test function to check the output of custom error 1
+   */
   error CustomErrors_Test_1();
   error CustomErrors_Test_2(uint256 a);
   error CustomErrors_Test_3(uint256 a, uint256 b);

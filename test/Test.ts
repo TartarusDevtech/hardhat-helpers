@@ -1,7 +1,7 @@
 export type CustomContractError = {
   name: string;
   errorCode: string;
-  params?: {
+  params?: readonly {
     name: string;
     type: string;
   }[];

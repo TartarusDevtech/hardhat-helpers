@@ -1,4 +1,4 @@
-import { ethers } from "hardhat";
+import { artifacts, ethers } from "hardhat";
 
 import { ContractDefinition, CustomContractError } from "./types";
 
@@ -29,10 +29,12 @@ export function generateCustomErrorsFile(contracts: ContractDefinition[]): strin
   contractName: string;
   name: string;
   errorCode: string;
-  params?: {
+  params?: readonly {
     name: string;
     type: string;
   }[];
+  reason?: string;
+  description?: string;
 };
 
 export const ContractErrorsByName = {
@@ -40,30 +42,39 @@ export const ContractErrorsByName = {
   for (const error of allCustomErrors) {
     file += dumpError(error, { keyBy: "errorName" });
   }
-  file += `};
+  file += `} as const;
 
 export const ContractErrorsBySignature = {
 `;
   for (const error of allCustomErrors) {
     file += dumpError(error, { keyBy: "errorCode" });
   }
-  file += `};\n`;
+  file += `} as const;\n`;
   return file;
 }
 
 function loadCustomErrors(contract: ContractDefinition): CustomContractError[] {
   const customErrors: CustomContractError[] = [];
   const contractName = contract.name.substring(0, contract.name.length - 9); // Remove "__factory" from the end
+
+  const artifact = artifacts.readArtifactSync(contractName)
+  const buildInfo = artifacts.getBuildInfoSync(`${artifact.sourceName}:${artifact.contractName}`)
+  const metadataOutput = JSON.parse((buildInfo?.output.contracts[artifact.sourceName][artifact.contractName] as any).metadata).output;
+  
   for (const entry of contract.abi) {
     if (entry.type !== "error") continue;
     const errorFragment = ethers.utils.ErrorFragment.from(entry);
+    const errorSignature = errorFragment.format("sighash");
     customErrors.push({
       contractName,
       name: errorFragment.name,
-      errorCode: ethers.utils.id(errorFragment.format("sighash")).substring(0, 10),
+      errorCode: ethers.utils.id(errorSignature).substring(0, 10),
       params: errorFragment.inputs,
+      reason: metadataOutput.userdoc.errors?.[errorSignature]?.[0]?.notice,
+      description: metadataOutput.devdoc.errors?.[errorSignature]?.[0]?.details,
     });
   }
+
   return customErrors;
 }
 
@@ -79,6 +90,12 @@ function dumpError(error: CustomContractError, options: CustomErrorFileOptions):
       results += `      { name: "${param.name}", type: "${param.type}" },\n`;
     }
     results += `    ],\n`;
+  }
+  if(error.reason) {
+    results += `    reason: "${error.reason}",\n`;
+  }
+  if(error.description) {
+    results += `    description: "${error.description}",\n`;
   }
 
   results += `  },\n`;
