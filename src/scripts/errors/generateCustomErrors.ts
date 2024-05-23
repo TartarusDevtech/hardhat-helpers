@@ -101,7 +101,7 @@ function dumpError(error: CustomContractError, options: CustomErrorFileOptions &
   if(error.reason) {
     results += `    reason: "${error.reason}",\n`;
   } else if (options.reasonRequirement === "Warn") {
-    results += `    reason: "",\n`;
+    results += `    reason: "${error.name}",\n`;
     console.warn(`Reason is required for error: ${error.name}`);
   } else if (options.reasonRequirement === "Error") {
     throw new Error(`Reason is required for error: ${error.name}`);
@@ -109,7 +109,7 @@ function dumpError(error: CustomContractError, options: CustomErrorFileOptions &
   if(error.description) {
     results += `    description: "${error.description}",\n`;
   } else if (options.descriptionRequirement === "Warn") {
-    results += `    description: "",\n`;
+    results += `    description: "${error.name}",\n`;
     console.warn(`Description is required for error: ${error.name}`);
   }
   else if (options.descriptionRequirement === "Error") {

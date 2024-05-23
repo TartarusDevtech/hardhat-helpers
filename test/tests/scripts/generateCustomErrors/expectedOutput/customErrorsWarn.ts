@@ -26,8 +26,8 @@ export const ContractErrorsByName = {
     params: [
       { name: "a", type: "uint256" },
     ],
-    reason: "",
-    description: "",
+    reason: "CustomErrors_Test_2",
+    description: "CustomErrors_Test_2",
   },
   CustomErrors_Test_3: {
     contractName: "CustomErrors",
@@ -37,8 +37,8 @@ export const ContractErrorsByName = {
       { name: "a", type: "uint256" },
       { name: "b", type: "uint256" },
     ],
-    reason: "",
-    description: "",
+    reason: "CustomErrors_Test_3",
+    description: "CustomErrors_Test_3",
   },
   CustomErrors_Test_4: {
     contractName: "CustomErrors2",
@@ -49,8 +49,8 @@ export const ContractErrorsByName = {
       { name: "b", type: "uint256" },
       { name: "c", type: "uint256" },
     ],
-    reason: "",
-    description: "",
+    reason: "CustomErrors_Test_4",
+    description: "CustomErrors_Test_4",
   },
 } as const;
 
@@ -69,8 +69,8 @@ export const ContractErrorsBySignature = {
     params: [
       { name: "a", type: "uint256" },
     ],
-    reason: "",
-    description: "",
+    reason: "CustomErrors_Test_2",
+    description: "CustomErrors_Test_2",
   },
   "0xd3c4fb90": {
     contractName: "CustomErrors",
@@ -80,8 +80,8 @@ export const ContractErrorsBySignature = {
       { name: "a", type: "uint256" },
       { name: "b", type: "uint256" },
     ],
-    reason: "",
-    description: "",
+    reason: "CustomErrors_Test_3",
+    description: "CustomErrors_Test_3",
   },
   "0xa2e67f32": {
     contractName: "CustomErrors2",
@@ -92,7 +92,7 @@ export const ContractErrorsBySignature = {
       { name: "b", type: "uint256" },
       { name: "c", type: "uint256" },
     ],
-    reason: "",
-    description: "",
+    reason: "CustomErrors_Test_4",
+    description: "CustomErrors_Test_4",
   },
 } as const;
