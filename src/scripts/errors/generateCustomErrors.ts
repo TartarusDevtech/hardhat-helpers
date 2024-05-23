@@ -6,7 +6,14 @@ type CustomErrorFileOptions = {
   keyBy: "errorName" | "errorCode";
 };
 
-export function generateCustomErrorsFile(contracts: ContractDefinition[]): string {
+export type FieldRequirement = "Optional" | "Warn" | "Error";
+
+type CommentOptions = {
+  reasonRequirement?: FieldRequirement;
+  descriptionRequirement?: FieldRequirement;
+}
+
+export function generateCustomErrorsFile(contracts: ContractDefinition[], options?: CommentOptions): string {
   // Gather the custom errors from each input contract and de-dupe entries.
   const allCustomErrors: CustomContractError[] = [];
   for (const contract of contracts) {
@@ -33,21 +40,21 @@ export function generateCustomErrorsFile(contracts: ContractDefinition[]): strin
     name: string;
     type: string;
   }[];
-  reason?: string;
-  description?: string;
+  reason${options?.reasonRequirement === undefined || options.reasonRequirement==='Optional' ? '?':''}: string;
+  description${options?.descriptionRequirement === undefined || options.descriptionRequirement==='Optional' ? '?':''}: string;
 };
 
 export const ContractErrorsByName = {
 `;
   for (const error of allCustomErrors) {
-    file += dumpError(error, { keyBy: "errorName" });
+    file += dumpError(error, { keyBy: "errorName", ...options});
   }
   file += `} as const;
 
 export const ContractErrorsBySignature = {
 `;
   for (const error of allCustomErrors) {
-    file += dumpError(error, { keyBy: "errorCode" });
+    file += dumpError(error, { keyBy: "errorCode", ...options });
   }
   file += `} as const;\n`;
   return file;
@@ -78,7 +85,7 @@ function loadCustomErrors(contract: ContractDefinition): CustomContractError[] {
   return customErrors;
 }
 
-function dumpError(error: CustomContractError, options: CustomErrorFileOptions): string {
+function dumpError(error: CustomContractError, options: CustomErrorFileOptions & CommentOptions): string {
   let results = `  ${options.keyBy === "errorName" ? error.name : `"${error.errorCode}"`}: {
     contractName: "${error.contractName}",
     name: "${error.name}",
@@ -93,9 +100,20 @@ function dumpError(error: CustomContractError, options: CustomErrorFileOptions):
   }
   if(error.reason) {
     results += `    reason: "${error.reason}",\n`;
+  } else if (options.reasonRequirement === "Warn") {
+    results += `    reason: "",\n`;
+    console.warn(`Reason is required for error: ${error.name}`);
+  } else if (options.reasonRequirement === "Error") {
+    throw new Error(`Reason is required for error: ${error.name}`);
   }
   if(error.description) {
     results += `    description: "${error.description}",\n`;
+  } else if (options.descriptionRequirement === "Warn") {
+    results += `    description: "",\n`;
+    console.warn(`Description is required for error: ${error.name}`);
+  }
+  else if (options.descriptionRequirement === "Error") {
+    throw new Error(`Description is required for error: ${error.name}`);
   }
 
   results += `  },\n`;
