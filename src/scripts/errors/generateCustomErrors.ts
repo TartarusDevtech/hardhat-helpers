@@ -13,8 +13,8 @@ type CommentOptions = {
   descriptionRequirement?: FieldRequirement;
   commentOverrides?: {
     [errorName: string]: {
-      reason: string;
-      description: string;
+      reason?: string;
+      description?: string;
     };
   };
 };
