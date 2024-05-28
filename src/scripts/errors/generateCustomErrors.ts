@@ -11,7 +11,13 @@ export type FieldRequirement = "Optional" | "Warn" | "Error";
 type CommentOptions = {
   reasonRequirement?: FieldRequirement;
   descriptionRequirement?: FieldRequirement;
-}
+  commentOverrides?: {
+    [errorName: string]: {
+      reason: string;
+      description: string;
+    };
+  };
+};
 
 export function generateCustomErrorsFile(contracts: ContractDefinition[], options?: CommentOptions): string {
   // Gather the custom errors from each input contract and de-dupe entries.
@@ -40,14 +46,14 @@ export function generateCustomErrorsFile(contracts: ContractDefinition[], option
     name: string;
     type: string;
   }[];
-  reason${options?.reasonRequirement === undefined || options.reasonRequirement==='Optional' ? '?':''}: string;
-  description${options?.descriptionRequirement === undefined || options.descriptionRequirement==='Optional' ? '?':''}: string;
+  reason${options?.reasonRequirement === undefined || options.reasonRequirement === "Optional" ? "?" : ""}: string;
+  description${options?.descriptionRequirement === undefined || options.descriptionRequirement === "Optional" ? "?" : ""}: string;
 };
 
 export const ContractErrorsByName = {
 `;
   for (const error of allCustomErrors) {
-    file += dumpError(error, { keyBy: "errorName", ...options});
+    file += dumpError(error, { keyBy: "errorName", ...options });
   }
   file += `} as const;
 
@@ -64,10 +70,12 @@ function loadCustomErrors(contract: ContractDefinition): CustomContractError[] {
   const customErrors: CustomContractError[] = [];
   const contractName = contract.name.substring(0, contract.name.length - 9); // Remove "__factory" from the end
 
-  const artifact = artifacts.readArtifactSync(contractName)
-  const buildInfo = artifacts.getBuildInfoSync(`${artifact.sourceName}:${artifact.contractName}`)
-  const metadataOutput = JSON.parse((buildInfo?.output.contracts[artifact.sourceName][artifact.contractName] as any).metadata).output;
-  
+  const artifact = artifacts.readArtifactSync(contractName);
+  const buildInfo = artifacts.getBuildInfoSync(`${artifact.sourceName}:${artifact.contractName}`);
+  const metadataOutput = JSON.parse(
+    (buildInfo?.output.contracts[artifact.sourceName][artifact.contractName] as any).metadata
+  ).output;
+
   for (const entry of contract.abi) {
     if (entry.type !== "error") continue;
     const errorFragment = ethers.utils.ErrorFragment.from(entry);
@@ -98,21 +106,25 @@ function dumpError(error: CustomContractError, options: CustomErrorFileOptions &
     }
     results += `    ],\n`;
   }
-  if(error.reason) {
-    results += `    reason: "${error.reason}",\n`;
+
+  const reason = (options.commentOverrides && options.commentOverrides[error.name]?.reason) || error.reason;
+  if (reason) {
+    results += `    reason: "${reason}",\n`;
   } else if (options.reasonRequirement === "Warn") {
     results += `    reason: "${error.name}",\n`;
     console.warn(`Reason is required for error: ${error.name}`);
   } else if (options.reasonRequirement === "Error") {
     throw new Error(`Reason is required for error: ${error.name}`);
   }
-  if(error.description) {
-    results += `    description: "${error.description}",\n`;
+
+  const description =
+    (options.commentOverrides && options.commentOverrides[error.name]?.description) || error.description;
+  if (description) {
+    results += `    description: "${description}",\n`;
   } else if (options.descriptionRequirement === "Warn") {
     results += `    description: "${error.name}",\n`;
     console.warn(`Description is required for error: ${error.name}`);
-  }
-  else if (options.descriptionRequirement === "Error") {
+  } else if (options.descriptionRequirement === "Error") {
     throw new Error(`Description is required for error: ${error.name}`);
   }
 

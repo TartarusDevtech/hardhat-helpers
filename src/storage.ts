@@ -3,12 +3,20 @@ import { ethers } from "hardhat";
 
 import { AddressLike, toAddress } from "./types";
 
-export async function getStorage(contract: AddressLike, slot: string | number, fromProvider?: providers.JsonRpcProvider): Promise<string> {
+export async function getStorage(
+  contract: AddressLike,
+  slot: string | number,
+  fromProvider?: providers.JsonRpcProvider
+): Promise<string> {
   slot = getSlot(slot, true);
   return await (fromProvider ?? ethers.provider).send("eth_getStorageAt", [toAddress(contract), slot]);
 }
 
-export async function getStorageAddress(contract: AddressLike, slot: string | number, fromProvider?: providers.JsonRpcProvider): Promise<string> {
+export async function getStorageAddress(
+  contract: AddressLike,
+  slot: string | number,
+  fromProvider?: providers.JsonRpcProvider
+): Promise<string> {
   let value = await getStorage(contract, slot, fromProvider);
   value = ethers.utils.hexStripZeros(value);
   value = ethers.utils.hexZeroPad(value, 20);
@@ -80,11 +88,7 @@ export async function setCodeFromContract(
   if (include1967Proxy) {
     // from https://eips.ethereum.org/EIPS/eip-1967
     const implementationStorageSlot = "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc";
-    const proxyAddress = await getStorageAddress(
-      fromContract,
-      implementationStorageSlot,
-      fromProvider
-    );
+    const proxyAddress = await getStorageAddress(fromContract, implementationStorageSlot, fromProvider);
     if (proxyAddress != ethers.constants.AddressZero) {
       const proxyCode = await getCode(proxyAddress, fromProvider);
       await setCodeTo(proxyAddress, proxyCode);

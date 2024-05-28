@@ -14,13 +14,24 @@ describe("scripts / generateCustomErrors / generateErrors", () => {
   });
 
   it("Generate errors file with placeholder", async () => {
-    const results = generateCustomErrorsFile(contracts, { reasonRequirement: "Warn", descriptionRequirement: "Warn"});
+    const results = generateCustomErrorsFile(contracts, { reasonRequirement: "Warn", descriptionRequirement: "Warn" });
     const expected = readFileSync(`${__dirname}/expectedOutput/customErrorsWarn.ts`, "utf8");
     expect(results).to.eq(expected);
   });
 
   it("Generate errors fails with missing requirement", async () => {
-    expect(() => generateCustomErrorsFile(contracts, { reasonRequirement: "Error", descriptionRequirement: "Error"})).to.be.throw("Reason is required for error: CustomErrors_Test_2");    
+    expect(() =>
+      generateCustomErrorsFile(contracts, { reasonRequirement: "Error", descriptionRequirement: "Error" })
+    ).to.be.throw("Reason is required for error: CustomErrors_Test_2");
+  });
+
+  it("Generate errors file with overrides", async () => {
+    const overrides = require("./expectedOutput/input_overrides.json");
+    const results = generateCustomErrorsFile(contracts, {
+      commentOverrides: overrides,
+    });
+    const expected = readFileSync(`${__dirname}/expectedOutput/customErrorsOverrides.ts`, "utf8");
+    expect(results).to.eq(expected);
   });
 
   describe("Conflict", () => {

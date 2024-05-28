@@ -1,0 +1,10 @@
+{
+  "CustomErrors_Test_1": {
+    "reason": "new reason",
+    "description": "new description"
+  },
+  "CustomErrors_Test_2": {
+    "reason": "reason added",
+    "description": "description added"
+  }
+}
