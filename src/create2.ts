@@ -1,8 +1,8 @@
 import { ethers } from "hardhat";
 
-import { AddressLike, toAddress } from "./types";
+import { Addressish, toAddress } from "./types";
 
-export function compute1167Create2Address(factory: AddressLike, implementation: AddressLike, salt: string): string {
+export function compute1167Create2Address(factory: Addressish, implementation: Addressish, salt: string): string {
   const creationCode = [
     "0x3d602d80600a3d3981f3363d3d373d3d3d363d73",
     toAddress(implementation).replace(/0x/, "").toLowerCase(),

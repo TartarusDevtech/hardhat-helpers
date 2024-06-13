@@ -3,8 +3,10 @@ import "@nomicfoundation/hardhat-chai-matchers";
 import { expect } from "chai";
 import { Contract, ContractTransaction, Event } from "ethers";
 import { EventFragment, Interface } from "ethers/lib/utils";
+import { ethers } from "hardhat";
 
 import { TypedEvent } from "./typechain/common";
+import { toTxHash,TransactionHashish } from "./types";
 
 export type EventLog = {
   contract: Contract;
@@ -37,13 +39,13 @@ export async function getEvent<T extends TypedEvent>(
  * Checks the tx for the exact logs specified including order, count, and args.
  */
 export async function expectAllEvents(
-  tx: ContractTransaction | Promise<ContractTransaction>,
+  tx: TransactionHashish | Promise<TransactionHashish>,
   logs: EventLog[]
 ): Promise<void> {
   if (tx instanceof Promise) {
     tx = await tx;
   }
-  const receipt = await tx.wait();
+  const receipt = await ethers.provider.getTransactionReceipt(toTxHash(tx));
   expect(receipt.logs.length).to.eq(
     logs.length,
     `Log count mismatch. Expected ${logs.length} logs, got ${receipt.logs.length}: ${JSON.stringify(receipt.logs)}`

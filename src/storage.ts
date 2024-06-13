@@ -1,10 +1,10 @@
 import { BigNumber, BigNumberish, providers } from "ethers";
 import { ethers } from "hardhat";
 
-import { AddressLike, toAddress } from "./types";
+import { Addressish, toAddress } from "./types";
 
 export async function getStorage(
-  contract: AddressLike,
+  contract: Addressish,
   slot: string | number,
   fromProvider?: providers.JsonRpcProvider
 ): Promise<string> {
@@ -13,7 +13,7 @@ export async function getStorage(
 }
 
 export async function getStorageAddress(
-  contract: AddressLike,
+  contract: Addressish,
   slot: string | number,
   fromProvider?: providers.JsonRpcProvider
 ): Promise<string> {
@@ -23,13 +23,13 @@ export async function getStorageAddress(
   return ethers.utils.getAddress(value);
 }
 
-export async function getStorageNumber(contract: AddressLike, slot: string | number): Promise<BigNumber> {
+export async function getStorageNumber(contract: Addressish, slot: string | number): Promise<BigNumber> {
   const value = await getStorage(contract, slot);
   return BigNumber.from(value);
 }
 
 async function getStoragePackedNumber(
-  contract: AddressLike,
+  contract: Addressish,
   slot: string | number,
   offsetInBytes: number,
   numberOfBytes: number
@@ -41,7 +41,7 @@ async function getStoragePackedNumber(
 }
 
 export async function getStoragePackedUint32(
-  contract: AddressLike,
+  contract: Addressish,
   slot: string | number,
   offsetInBytes: number
 ): Promise<BigNumber> {
@@ -50,7 +50,7 @@ export async function getStoragePackedUint32(
 }
 
 export async function getStoragePackedBool(
-  contract: AddressLike,
+  contract: Addressish,
   slot: string | number,
   offsetInBytes: number
 ): Promise<boolean> {
@@ -58,7 +58,7 @@ export async function getStoragePackedBool(
   return value.eq(1);
 }
 export async function getStoragePackedUint8(
-  contract: AddressLike,
+  contract: Addressish,
   slot: string | number,
   offsetInBytes: number
 ): Promise<BigNumber> {
@@ -66,19 +66,19 @@ export async function getStoragePackedUint8(
   return value;
 }
 
-export async function getCode(fromContract: AddressLike, fromProvider?: providers.Provider): Promise<string> {
+export async function getCode(fromContract: Addressish, fromProvider?: providers.Provider): Promise<string> {
   return await (fromProvider ?? ethers.provider).getCode(toAddress(fromContract));
 }
 
-export async function hasCode(contract: AddressLike | string): Promise<boolean> {
+export async function hasCode(contract: Addressish | string): Promise<boolean> {
   const address = typeof contract === "string" ? contract : contract.address;
   const code = await ethers.provider.getCode(address);
   return code !== "0x";
 }
 
 export async function setCodeFromContract(
-  toContract: AddressLike,
-  fromContract: AddressLike,
+  toContract: Addressish,
+  fromContract: Addressish,
   fromProvider?: providers.JsonRpcProvider,
   include1967Proxy?: boolean
 ) {
@@ -97,11 +97,11 @@ export async function setCodeFromContract(
   }
 }
 
-export async function setCodeTo(contract: AddressLike, code: string) {
+export async function setCodeTo(contract: Addressish, code: string) {
   await ethers.provider.send("hardhat_setCode", [toAddress(contract), code]);
 }
 
-export async function setStorage(contract: AddressLike, slot: string | number, value: string | number) {
+export async function setStorage(contract: Addressish, slot: string | number, value: string | number) {
   slot = getSlot(slot);
   if (typeof value === "number") {
     value = ethers.utils.hexValue(value);
@@ -111,7 +111,7 @@ export async function setStorage(contract: AddressLike, slot: string | number, v
 }
 
 export async function setStoragePackedUint32(
-  contract: AddressLike,
+  contract: Addressish,
   slot: string | number,
   offsetInBytes: number,
   value: BigNumberish
@@ -120,7 +120,7 @@ export async function setStoragePackedUint32(
 }
 
 export async function setStoragePackedBool(
-  contract: AddressLike,
+  contract: Addressish,
   slot: string | number,
   offsetInBytes: number,
   value: boolean
@@ -130,7 +130,7 @@ export async function setStoragePackedBool(
 }
 
 export async function setStoragePackedUint8(
-  contract: AddressLike,
+  contract: Addressish,
   slot: string | number,
   offsetInBytes: number,
   value: BigNumberish
@@ -139,7 +139,7 @@ export async function setStoragePackedUint8(
 }
 
 async function setStoragePackedValue(
-  contract: AddressLike,
+  contract: Addressish,
   slot: string | number,
   offsetInBytes: number,
   newValue: BigNumberish,

@@ -1,9 +1,11 @@
-import { BigNumber, ContractTransaction, providers } from "ethers";
+import { BigNumber, providers } from "ethers";
 import { ethers } from "hardhat";
 const provider: providers.JsonRpcProvider = ethers.provider;
 import chalk from "chalk";
 import { mkdirSync, writeFileSync } from "fs";
 import path from "path";
+
+import { toTxHash,TransactionHashish } from "./types";
 /*
  CircleCI supported chalk styles
   - blue
@@ -30,19 +32,19 @@ const records: GasRecord = {};
 let resultsLog = "";
 
 export async function gasStory(
-  txOrGasUsed: ContractTransaction | ContractTransaction[] | number,
+  txOrGasUsed: TransactionHashish | TransactionHashish[] | number,
   ...categories: string[]
 ): Promise<number> {
   let gasUsed = BigNumber.from(0);
   if (Array.isArray(txOrGasUsed)) {
     for (const t of txOrGasUsed) {
-      const receipt = await provider.getTransactionReceipt(t.hash);
+      const receipt = await provider.getTransactionReceipt(toTxHash(t));
       gasUsed = gasUsed.add(receipt.gasUsed);
     }
   } else if (typeof txOrGasUsed === "number") {
     gasUsed = BigNumber.from(txOrGasUsed);
   } else {
-    const receipt = await provider.getTransactionReceipt(txOrGasUsed.hash);
+    const receipt = await provider.getTransactionReceipt(toTxHash(txOrGasUsed));
     gasUsed = receipt.gasUsed;
   }
 
