@@ -1,6 +1,7 @@
 import { expect } from "chai";
-import { BigNumberish, ContractTransaction } from "ethers";
+import { BigNumberish } from "ethers";
 import { ethers } from "hardhat";
+import { Addressish } from "hardhat-helpers";
 
 import { ContractErrorsByName, CustomContractError } from "./customErrors";
 
@@ -33,7 +34,7 @@ export const expectError = {
   CustomErrors_Test_3: async function (
     tx: Promise<any>,
     a: BigNumberish,
-    b: BigNumberish,
+    b: Addressish,
   ) {
     await expectCustomError(
       tx,

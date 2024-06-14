@@ -4,6 +4,7 @@ import { ethers } from "hardhat";
 import { snapshotEach } from "../../../../src";
 import { CustomErrors, CustomErrors__factory } from "../../../typechain";
 import { expectError } from "./expectedOutput/testHelpers";
+import { getAddress } from "ethers/lib/utils";
 
 describe("scripts / generateCustomErrors / useTestHelpers", () => {
   let contract: CustomErrors;
@@ -27,6 +28,6 @@ describe("scripts / generateCustomErrors / useTestHelpers", () => {
 
   it("Catches revert with param", async () => {
     const tx = contract.error(2);
-    await expectError.CustomErrors_Test_3(tx, 1, 2);
+    await expectError.CustomErrors_Test_3(tx, 1, "0x0000000000000000000000000000000000000002");
   });
 });

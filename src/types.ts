@@ -1,11 +1,20 @@
-/// Allows a caller to specify an address string, a SignerWithAddress, or a Contract instance.
-export type Addressish = string | { address: string };
-export function toAddress(value: Addressish): string {
+/**
+ * Allows a caller to specify an address string, a SignerWithAddress, or a Contract instance.
+ */
+export type Addressish = string | { address: string } | { account: { address: string } };
+
+export function toAddress(value: Addressish): `0x${string}` {
+  let result: string;
   if (typeof value === "string") {
-    return value;
+    result = value;
+  } else if ('address' in value) {
+    result = value.address;
+  } else if ('account' in value) {
+    result = value.account.address;
   } else {
-    return value.address;
+    throw new Error("Invalid address");
   }
+  return result as `0x${string}`;
 }
 
 export type TransactionHashish = string | { hash: string };

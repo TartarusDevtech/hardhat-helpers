@@ -70,8 +70,8 @@ export async function getCode(fromContract: Addressish, fromProvider?: providers
   return await (fromProvider ?? ethers.provider).getCode(toAddress(fromContract));
 }
 
-export async function hasCode(contract: Addressish | string): Promise<boolean> {
-  const address = typeof contract === "string" ? contract : contract.address;
+export async function hasCode(contract: Addressish): Promise<boolean> {
+  const address = toAddress(contract);
   const code = await ethers.provider.getCode(address);
   return code !== "0x";
 }

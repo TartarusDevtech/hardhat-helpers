@@ -5,8 +5,9 @@ export function generateErrorTestHelpers(
   contractErrors: { [errorName: string]: CustomContractError }
 ): string {
   let file = `import { expect } from "chai";
-import { BigNumberish, ContractTransaction } from "ethers";
+import { BigNumberish } from "ethers";
 import { ethers } from "hardhat";
+import { Addressish } from "hardhat-helpers";
 
 import { ContractErrorsByName, CustomContractError } from "${customErrorsImportPath}";
 
@@ -29,7 +30,9 @@ export const expectError = {
         let type;
         if (param.type.includes("int")) {
           type = "BigNumberish";
-        } else if (param.type === "address" || param.type === "string" || param.type.includes("byte")) {
+        } else if (param.type === "address") {
+          type = "Addressish";
+        } else if (param.type === "string" || param.type.includes("byte")) {
           type = "string";
         } else {
           throw new Error(`Unknown type: ${param.type}`);

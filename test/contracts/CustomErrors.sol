@@ -9,7 +9,7 @@ contract CustomErrors {
    */
   error CustomErrors_Test_1();
   error CustomErrors_Test_2(uint256 a);
-  error CustomErrors_Test_3(uint256 a, uint256 b);
+  error CustomErrors_Test_3(uint256 a, address b);
 
   uint256 private counter;
 
@@ -19,7 +19,7 @@ contract CustomErrors {
     } else if (test == 1) {
       revert CustomErrors_Test_2(1);
     } else if (test == 2) {
-      revert CustomErrors_Test_3(1, 2);
+      revert CustomErrors_Test_3(1, address(2));
     }
     counter++;
   }
