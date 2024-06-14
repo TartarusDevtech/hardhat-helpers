@@ -1,10 +1,11 @@
 import { expect } from "chai";
-import { BigNumberish, ContractTransaction } from "ethers";
+import { BigNumberish } from "ethers";
 import { ethers } from "hardhat";
+import { TransactionHashish } from "hardhat-helpers";
 
 import { ContractErrorsByName, CustomContractError } from "./customErrors";
 
-async function expectCustomError(tx: Promise<any>, error: CustomContractError, ...args: any[]) {
+async function expectCustomError(tx: Promise<TransactionHashish>, error: CustomContractError, ...args: any[]) {
   const factory = await ethers.getContractFactory(error.contractName);
   await expect(tx)
     .to.be.revertedWithCustomError(factory, error.name)
@@ -13,7 +14,7 @@ async function expectCustomError(tx: Promise<any>, error: CustomContractError, .
 
 export const expectError = {
   CustomErrors_Test_1: async function (
-    tx: Promise<any>,
+    tx: Promise<TransactionHashish>,
   ) {
     await expectCustomError(
       tx,
@@ -21,7 +22,7 @@ export const expectError = {
     );
   },
   CustomErrors_Test_2: async function (
-    tx: Promise<any>,
+    tx: Promise<TransactionHashish>,
     a: BigNumberish,
   ) {
     await expectCustomError(
@@ -31,7 +32,7 @@ export const expectError = {
     );
   },
   CustomErrors_Test_3: async function (
-    tx: Promise<any>,
+    tx: Promise<TransactionHashish>,
     a: BigNumberish,
     b: BigNumberish,
   ) {
@@ -43,7 +44,7 @@ export const expectError = {
     );
   },
   CustomErrors_Test_4: async function (
-    tx: Promise<any>,
+    tx: Promise<TransactionHashish>,
     a: BigNumberish,
     b: BigNumberish,
     c: BigNumberish,
