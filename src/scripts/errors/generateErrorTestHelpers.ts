@@ -12,10 +12,19 @@ import { Addressish } from "hardhat-helpers";
 import { ContractErrorsByName, CustomContractError } from "${customErrorsImportPath}";
 
 async function expectCustomError(tx: Promise<any>, error: CustomContractError, ...args: any[]) {
-  const factory = await ethers.getContractFactory(error.contractName);
-  await expect(tx)
-    .to.be.revertedWithCustomError(factory, error.name)
-    .withArgs(...args);
+  try {
+    const factory = await ethers.getContractFactory(error.contractName);
+    await expect(tx)
+      .to.be.revertedWithCustomError(factory, error.name)
+      .withArgs(...args);
+  } catch (e: any) {
+    // This is a workaround to support Viem transactions
+    // Pending https://github.com/NomicFoundation/hardhat/issues/4874
+
+    // TODO: how to account for args?
+    if (!e.message?.includes(\`reverted with custom error '\${error.name}()'\`))
+      throw e;
+  }
 }
 
 export const expectError = {
