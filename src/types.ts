@@ -1,3 +1,5 @@
+import { ethers } from "hardhat";
+
 /**
  * Allows a caller to specify an address string, a SignerWithAddress, or a Contract instance.
  */
@@ -14,7 +16,7 @@ export function toAddress(value: Addressish): `0x${string}` {
   } else {
     throw new Error("Invalid address");
   }
-  return result as `0x${string}`;
+  return ethers.utils.getAddress(result) as `0x${string}`;
 }
 
 export type TransactionHashish = string | { hash: string };
