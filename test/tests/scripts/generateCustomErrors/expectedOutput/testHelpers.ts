@@ -16,7 +16,7 @@ async function expectCustomError(tx: Promise<any>, error: CustomContractError, .
     // Pending https://github.com/NomicFoundation/hardhat/issues/4874
 
     // TODO: how to account for args?
-    if (!e.message?.includes(`reverted with custom error '${error.name}(${args.join(",")})'`))
+    if (!e.message?.includes(`reverted with custom error '${error.name}(${args.join(", ")})'`))
       throw e;
   }
 }
