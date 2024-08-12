@@ -2818,10 +2818,10 @@ hardhat-gas-reporter@1.0.10:
     eth-gas-reporter "^0.2.25"
     sha1 "^1.1.1"
 
-hardhat-tracer@3.0.3:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/hardhat-tracer/-/hardhat-tracer-3.0.3.tgz#99cf884706b29d53875547f1917760997ed94994"
-  integrity sha512-Uto+JQGayzZRnwdUyM1Un0zmFth+j3jkijHxls75BCTEBHXvAilUO20UloT+b2DYWVCcKn5GRuRpxjSQEV4QYg==
+hardhat-tracer@3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/hardhat-tracer/-/hardhat-tracer-3.1.0.tgz#460ced6bd6919928fc679a8d5764f2b861283b3b"
+  integrity sha512-Ip16HQAuzbqbNJUIEVfqmbPmOY90bxZSpwu5Q73cwloy+LUYA04BATUM9Gui5H7zcgsgZ1IVy7pSYn6ZMjLmag==
   dependencies:
     chalk "^4.1.2"
     debug "^4.3.4"
