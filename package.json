@@ -38,7 +38,7 @@
     "@typechain/hardhat": "6.1.6",
     "@types/chai": "4.3.11",
     "@types/debug": "4.1.12",
-    "@types/mocha": "10.0.7",
+    "@types/mocha": "10.0.8",
     "@types/readable-stream": "4.0.15",
     "@typescript-eslint/eslint-plugin": "5.62.0",
     "@typescript-eslint/parser": "5.62.0",
