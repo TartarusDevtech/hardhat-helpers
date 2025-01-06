@@ -5066,12 +5066,12 @@ solc@0.7.3:
     semver "^5.5.0"
     tmp "0.0.33"
 
-solhint@5.0.3:
-  version "5.0.3"
-  resolved "https://registry.yarnpkg.com/solhint/-/solhint-5.0.3.tgz#b57f6d2534fe09a60f9db1b92e834363edd1cbde"
-  integrity sha512-OLCH6qm/mZTCpplTXzXTJGId1zrtNuDYP5c2e6snIv/hdRVxPfBBz/bAlL91bY/Accavkayp2Zp2BaDSrLVXTQ==
+solhint@5.0.4:
+  version "5.0.4"
+  resolved "https://registry.yarnpkg.com/solhint/-/solhint-5.0.4.tgz#0a59c45c43f45121be9d455577e6964557182130"
+  integrity sha512-GzKBjJ8S2utRsEOCJXhY2H35gwHGmoQY2rQXcPGT4XdDlzwgGYz0Ovo9Xm7cmWYgSo121uF+5tiwrqQT2b+Rtw==
   dependencies:
-    "@solidity-parser/parser" "^0.18.0"
+    "@solidity-parser/parser" "^0.19.0"
     ajv "^6.12.6"
     antlr4 "^4.13.1-patch-1"
     ast-parents "^0.0.1"
