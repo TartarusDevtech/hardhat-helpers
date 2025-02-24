@@ -52,7 +52,7 @@
     "hardhat-gas-reporter": "1.0.10",
     "hardhat-tracer": "2.7.0",
     "mocha": "11.1.0",
-    "prettier": "3.5.1",
+    "prettier": "3.5.2",
     "prettier-plugin-solidity": "1.4.2",
     "solhint": "5.0.5",
     "solidity-coverage": "0.8.14",
