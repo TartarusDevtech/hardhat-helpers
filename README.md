@@ -70,9 +70,4 @@ it("Do something later", async () => {
 
 ## And more...
 
-TODO: more docs
-
-- [balance](./src/balance.ts)
-- [fork](./src/fork.ts)
-  - Forked contracts: [dai](./src/mainnet/dai.ts)
-- [storage](./src/storage.ts)
+```
